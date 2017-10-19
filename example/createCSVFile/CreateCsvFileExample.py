@@ -55,9 +55,9 @@ if __name__ == "__main__":
     # sc.stop()
 
 
-    createFile = open("/Users/whitexozu/dev/pycharm_workspace/pythonExample/example/createCSVFile/", 'w')
-    for i in range(farray):
-        createFile.write(i)
+    createFile = open(sys.argv[3], 'w')
+    for s in farray:
+        createFile.write('%s\n' % s)
 
     createFile.close()
 
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 # --conf "spark.app.id=HdfsToHive" \
 # CreateCsvFileExample.py \
 # yarn \
-# hdfs://localhost:8020/dq/skm/common/word/temp/callsentenceText1.txt \
+# hdfs://localhost:8020/dq/skm/common/word/temp/callWordMod1.txt \
 # /Users/whitexozu/dev/pycharm_workspace/pythonExample/example/createCSVFile/callWordCsv1.txt \
 # 69684547 \
 # user1
