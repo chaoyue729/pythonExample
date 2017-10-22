@@ -32,9 +32,11 @@ if __name__ == "__main__":
 
     # df.createOrReplaceTempView("table1")
 
-    df = ss.sql("SELECT call_id AS f1, user_id as f2 from meta_stt_word_tf")
+    df = ss.sql("select word, sum(tf) as tf, count(call_id) as idf, count(distinct user_id) as user_count from meta_stt_word_tf group by word")
     print(df.collect())
-
+    # wtf = df.collect()
+    # wtf = df.collect()
+    # wtf2 = wtf.map()
 
 
     # metaRDD = ef.loadHdfsRDD(sc, sys.argv[3])
@@ -54,8 +56,8 @@ if __name__ == "__main__":
     #
     # ss.sql("CREATE TABLE IF NOT EXISTS InternalData_day_spark_orc (REGDATE string, dq_id string, product_cat_id string, voc_cat_id string, channel string, prod1_count int, prod2_count int, cnt int)")
 
-    # // select word, sum(tf) from meta_stt_word_tf group by word order by 1;
-
+    # select word, sum(tf) from meta_stt_word_tf group by word order by 1;
+    # select word, count(call_id) from (select word, call_id from meta_stt_word_tf) group by word
     ss.stop()
 
 
