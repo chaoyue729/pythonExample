@@ -28,20 +28,22 @@ if __name__ == "__main__":
     createTableSql = []
     createTableSql.append("CREATE EXTERNAL TABLE IF NOT EXISTS ta_common_keyword ")
     createTableSql.append("( ")
-    createTableSql.append("call_id string, ")
     createTableSql.append("user_id string, ")
     createTableSql.append("keyword string, ")
-    createTableSql.append("tf int ")
+    createTableSql.append("tf int, ")
+    createTableSql.append("call_id string, ")
+    createTableSql.append("call_date string, ")
+    createTableSql.append("brch_cd string ")
     createTableSql.append(") ")
     createTableSql.append("partitioned by (camp_start_dt string, insrcomp_cd string, brch_cd string, spk_cd string, call_type string) ")
     createTableSql.append("ROW FORMAT DELIMITED ")
     createTableSql.append("FIELDS TERMINATED BY '|' ")
     createTableSql.append("stored as textfile ")
-    createTableSql.append("location '/dq/skm/common/word/daily' ")
+    createTableSql.append("location '/dq/skm/common/keyword/daily' ")
 
     ss.sql(''.join(createTableSql))
 
-    campStartDt = '201710'
+    campStartDt = sys.argv[2]
     insrcompCdArray = ['51']
     brchCdArray = ['51', '54', '55']
     spkCdArray = ['f', 'c', 'a']
@@ -51,26 +53,8 @@ if __name__ == "__main__":
         for brchCd in brchCdArray:
             for spkCd in spkCdArray:
                 for callType in callTypeArray:
-                    ss.sql("ALTER TABLE ta_common_keyword ADD PARTITION (camp_start_dt='{0}', insrcomp_cd='{1}', brch_cd='{2}', spk_cd='{3}', call_type='{4}') location '/dq/skm/common/word/daily/{0}/{1}/{2}/{3}/{4}'".format(campStartDt, insrcompCd, brchCd, spkCd, callType))
+                    ss.sql("ALTER TABLE ta_common_keyword ADD PARTITION (camp_start_dt='{0}', insrcomp_cd='{1}', brch_cd='{2}', spk_cd='{3}', call_type='{4}') location '/dq/skm/common/keyword/daily/{0}/{1}/{2}/{3}/{4}'".format(campStartDt, insrcompCd, brchCd, spkCd, callType))
 
     ss.stop()
 
-
-
-# spark-submit --master yarn \
-# --deploy-mode client \
-# --executor-memory 2g \
-# --name HdfsToHive \
-# --conf "spark.app.id=HdfsToHive" \
-# DqdocToHiveExample.py \
-# yarn \
-# hdfs://localhost:8020/dq/av/fs/input/voc/small/InternalData.small.UTF-8 \
-# hdfs://localhost:8020/dq/av/fs/py/output
-
-# spark-submit --master yarn \
-# --deploy-mode client \
-# --executor-memory 2g \
-# --name HdfsToHive \
-# --conf "spark.app.id=HdfsToHive" \
-# createHiveTable.py \
-# yarn
+# spark-submit createHiveTable.py yarn 201710
