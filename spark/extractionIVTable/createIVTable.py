@@ -81,7 +81,8 @@ if __name__ == "__main__":
                     # print(sbDf.count())
                     # print(nsbDf.count())
                     print('-----------------------------------')
-
+                    print('{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}'.format('키워드'
+                        , '캠페인년월', '보함서구분', '센터구분', '보이스구분', '고객수(청약)', '고객수(단순,가망)', 'Event(Y)', 'Event(N)', 'Non-Event(Y)', 'Non-Event(N)', 'WOE(=Y)', 'WOE(=N)', 'IV(=Y)', 'IV(=N)', 'IV Sum'))
                     resultDf = sbDf.join(nsbDf, 'keyword', 'inner')
                     insertRows = [];
                     for t in resultDf.collect():
@@ -97,6 +98,8 @@ if __name__ == "__main__":
                         ivN = woeN - (eventN - nonEventN)
                         # print('{0}, {1}, {2}, {3}, {4}'.format(keyword, campStartDt, insrcompCd, brchCd, spkCd))
                         # print('{0}, {1}'.format(ivY + ivN, t[1] + t[2]))
+                        print('{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}'.format(keyword
+                        , campStartDt, insrcompCd, brchCd, spkCd, t[1], t[2], eventY, eventN, nonEventY, nonEventN, woeY, woeN, ivY, ivN, ivY + ivN))
                         insertRows.append([keyword, ivY + ivN, t[2], campStartDt, insrcompCd, brchCd, spkCd])
 
                     insertDf = ss.createDataFrame(insertRows, schema)
