@@ -22,10 +22,13 @@ class executeFun():
         return ss
 
 if __name__ == "__main__":
-    ef = executeFun()
-    ss = ef.getSparkSession("insert ta_word_tfidf", sys.argv[1])
+    # reload(sys)
+    # sys.setdefaultencoding('utf-8')
 
-    campStartDt = '201710'
+    ef = executeFun()
+    ss = ef.getSparkSession("insert ta_keyword_iv", sys.argv[1])
+
+    campStartDt = '201709'
     insrcompCdArray = ['51']
     brchCdArray = ['51', '54', '55']
     spkCdArray = ['f', 'c', 'a']
@@ -43,8 +46,8 @@ if __name__ == "__main__":
     ss.sql(''.join(createTableSql))
 
     keyword = ''
-    sbcpMax = 1
-    nonsbcpMax = 3
+    sbcpMax = 10
+    nonsbcpMax = 300
     eventY = 0
     eventN = 0
     nonEventY = 0
@@ -81,25 +84,22 @@ if __name__ == "__main__":
                     # print(sbDf.count())
                     # print(nsbDf.count())
                     print('-----------------------------------')
-                    print('{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}'.format('키워드'
-                        , '캠페인년월', '보함서구분', '센터구분', '보이스구분', '고객수(청약)', '고객수(단순,가망)', 'Event(Y)', 'Event(N)', 'Non-Event(Y)', 'Non-Event(N)', 'WOE(=Y)', 'WOE(=N)', 'IV(=Y)', 'IV(=N)', 'IV Sum'))
+                    print('{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}'.format('keyword', 'campStartDt', 'insrcompCd', 'brchCd', 'spkCd', 'sbUserCount', 'nsbUserCount', 'Event(Y)', 'Event(N)', 'Non-Event(Y)', 'Non-Event(N)', 'WOE(=Y)', 'WOE(=N)', 'IV(=Y)', 'IV(=N)', 'IV Sum'))
                     resultDf = sbDf.join(nsbDf, 'keyword', 'inner')
                     insertRows = [];
                     for t in resultDf.collect():
-                        # print(t[0], t[1], t[2])
                         keyword = t[0]
-                        eventY = t[1] / sbcpMax * 100
-                        eventN = sbcpMax - t[1] / sbcpMax * 100
-                        nonEventY = t[2] / nonsbcpMax * 100
-                        nonEventN = nonsbcpMax - t[2] / nonsbcpMax * 100
+                        eventY = float(t[1]) / float(sbcpMax)
+                        eventN = float(float(sbcpMax) - float(t[1])) / float(sbcpMax)
+                        nonEventY = float(t[2]) / float(nonsbcpMax)
+                        nonEventN = float(float(nonsbcpMax) - float(t[2])) / float(nonsbcpMax)
                         woeY = math.log(eventY / nonEventY)
                         woeN = math.log(eventN / nonEventN)
                         ivY = woeY - (eventY - nonEventY)
                         ivN = woeN - (eventN - nonEventN)
                         # print('{0}, {1}, {2}, {3}, {4}'.format(keyword, campStartDt, insrcompCd, brchCd, spkCd))
                         # print('{0}, {1}'.format(ivY + ivN, t[1] + t[2]))
-                        print('{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}'.format(keyword
-                        , campStartDt, insrcompCd, brchCd, spkCd, t[1], t[2], eventY, eventN, nonEventY, nonEventN, woeY, woeN, ivY, ivN, ivY + ivN))
+                        print('{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}'.format(keyword.encode('utf-8'), campStartDt, insrcompCd, brchCd, spkCd, t[1], t[2], eventY, eventN, nonEventY, nonEventN, woeY, woeN, ivY, ivN, ivY + ivN))
                         insertRows.append([keyword, ivY + ivN, t[2], campStartDt, insrcompCd, brchCd, spkCd])
 
                     insertDf = ss.createDataFrame(insertRows, schema)

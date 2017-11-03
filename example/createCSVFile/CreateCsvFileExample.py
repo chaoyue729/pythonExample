@@ -29,8 +29,7 @@ if __name__ == "__main__":
     uid = sys.argv[5]
     farray=[]
     for v in result:
-        # farray.append( ('', ''.join( [cid, '|', uid, '|', v[0], '|', str(v[1])] )) )
-        farray.append(''.join([cid, '|', uid, '|', v[0], '|', str(v[1])]))
+        farray.append(''.join([cid, '|', v[0], '|', str(v[1]), '|', uid]))
 
     # resultRDD.saveAsTextFile(sys.argv[3])
 
@@ -57,7 +56,7 @@ if __name__ == "__main__":
 
     createFile = open(sys.argv[3], 'w')
     for s in farray:
-        createFile.write('%s\n' % s)
+        createFile.write('%s\n' % s.encode('utf-8'))
 
     createFile.close()
 
@@ -68,19 +67,7 @@ if __name__ == "__main__":
 # --conf "spark.app.id=HdfsToHive" \
 # CreateCsvFileExample.py \
 # yarn \
-# hdfs://localhost:8020/dq/skm/common/word/temp/callsentenceText1.txt \
-# hdfs://localhost:8020/dq/skm/common/word/daily/201710/51/51/a/nsb \
-# 69684547 \
-# user1
-
-# spark-submit --master yarn \
-# --deploy-mode client \
-# --executor-memory 2g \
-# --name HdfsToHive \
-# --conf "spark.app.id=HdfsToHive" \
-# CreateCsvFileExample.py \
-# yarn \
-# hdfs://localhost:8020/dq/skm/common/word/temp/callWordMod1.txt \
+# hdfs://localhost:8020/dq/skm/common/keyword/temp/callWordMod1.txt \
 # /Users/whitexozu/dev/pycharm_workspace/pythonExample/example/createCSVFile/callWordCsv1.txt \
 # 69684547 \
 # user1

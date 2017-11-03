@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 import collections
 from operator import add
 from pyspark import SparkContext, SparkConf
@@ -55,7 +57,7 @@ if __name__ == "__main__":
 
     ss.sql(''.join(createTableSql))
 
-    campStartDt = '201710'
+    campStartDt = '201709'
     insrcompCdArray = ['51']
     brchCdArray = ['51', '54', '55']
     spkCdArray = ['f', 'c', 'a']
