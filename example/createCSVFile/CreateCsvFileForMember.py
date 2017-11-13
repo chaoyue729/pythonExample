@@ -7,8 +7,8 @@ if __name__ == "__main__":
     start = time.time()
 
     path = "/Users/whitexozu/dev/pycharm_workspace/pythonExample/example/createCSVFile/"
-    # writeFileName = "callMemberSbCsv01.txt"
-    writeFileName = "callMemberNsbCsv01.txt"
+    writeFileName = "callMemberSbCsv01.txt"
+    # writeFileName = "callMemberNsbCsv01.txt"
 
     gender = [1, 2]
     age = [10, 20, 30, 40, 50, 60, 70, 80, 990]
@@ -17,15 +17,16 @@ if __name__ == "__main__":
     callTimeC = [809, 0, 473, 0, 814, 133, 765, 642, 980, 321, 42, 0]
     callTimeF = [1002, 924, 2117, 20987, 6781, 1862, 987, 2465, 4385, 5621, 9971]
     # callRsltCd = ["01", "02", "03", "04", "02", "03", "04", "02", "03", "04", "02", "03", "04", "02", "03", "04", "02", "03", "04"]
-    # callRsltCd = ["01"]
-    callRsltCd = ["02", "03", "04"]
+    callRsltCd = ["01"]
+    # callRsltCd = ["02", "03", "04"]
     emoPos = [0, 1, 2, 3, 4]
     emoEng = [0, 1, 2, 3, 4, 5, 6, 7]
 
     callMemberFile = open(''.join([path, writeFileName]), 'w')
 
     line = []
-    for i in range(4000, 1604000):
+    for i in range(1, 4000):
+    # for i in range(4000, 1604000):
         del line[:]
         line.append('user' + str(i))
         line.append('|')
