@@ -46,8 +46,8 @@ if __name__ == "__main__":
     ss.sql(''.join(createTableSql))
 
     keyword = ''
-    sbcpMax = 10
-    nonsbcpMax = 300
+    sbcpMax = 3
+    nonsbcpMax = 3
     eventY = 0
     eventN = 0
     nonEventY = 0
@@ -67,46 +67,54 @@ if __name__ == "__main__":
 
     schema = StructType([sf1, sf2, sf3, sf4, sf5, sf6, sf7])
 
-    for insrcompCd in insrcompCdArray:
-        for brchCd in brchCdArray:
-            for spkCd in spkCdArray:
-                selectQuery = "select keyword, count(user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(
-                    campStartDt, insrcompCd, brchCd, spkCd, 'sb')
-                # print('selectQuery : ' + selectQuery)
-                sbDf = ss.sql(selectQuery)
+    try :
+        for insrcompCd in insrcompCdArray:
+            for brchCd in brchCdArray:
+                for spkCd in spkCdArray:
+                    selectQuery = "select keyword, count(user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(
+                        campStartDt, insrcompCd, brchCd, spkCd, 'sb')
+                    # print('selectQuery : ' + selectQuery)
+                    sbDf = ss.sql(selectQuery)
 
-                selectQuery = "select keyword, count(user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(
-                    campStartDt, insrcompCd, brchCd, spkCd, 'nsb')
-                # print('selectQuery : ' + selectQuery)
-                nsbDf = ss.sql(selectQuery)
+                    selectQuery = "select keyword, count(user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(
+                        campStartDt, insrcompCd, brchCd, spkCd, 'nsb')
+                    # print('selectQuery : ' + selectQuery)
+                    nsbDf = ss.sql(selectQuery)
 
-                if sbDf.count() > 0 and nsbDf.count() > 0 :
-                    # print(sbDf.count())
-                    # print(nsbDf.count())
-                    print('-----------------------------------')
-                    print('{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}'.format('keyword', 'campStartDt', 'insrcompCd', 'brchCd', 'spkCd', 'sbUserCount', 'nsbUserCount', 'Event(Y)', 'Event(N)', 'Non-Event(Y)', 'Non-Event(N)', 'WOE(=Y)', 'WOE(=N)', 'IV(=Y)', 'IV(=N)', 'IV Sum'))
-                    resultDf = sbDf.join(nsbDf, 'keyword', 'inner')
-                    insertRows = [];
-                    for t in resultDf.collect():
-                        keyword = t[0]
-                        eventY = float(t[1]) / float(sbcpMax)
-                        eventN = float(float(sbcpMax) - float(t[1])) / float(sbcpMax)
-                        nonEventY = float(t[2]) / float(nonsbcpMax)
-                        nonEventN = float(float(nonsbcpMax) - float(t[2])) / float(nonsbcpMax)
-                        woeY = math.log(eventY / nonEventY)
-                        woeN = math.log(eventN / nonEventN)
-                        ivY = woeY - (eventY - nonEventY)
-                        ivN = woeN - (eventN - nonEventN)
-                        # print('{0}, {1}, {2}, {3}, {4}'.format(keyword, campStartDt, insrcompCd, brchCd, spkCd))
-                        # print('{0}, {1}'.format(ivY + ivN, t[1] + t[2]))
-                        print('{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}'.format(keyword.encode('utf-8'), campStartDt, insrcompCd, brchCd, spkCd, t[1], t[2], eventY, eventN, nonEventY, nonEventN, woeY, woeN, ivY, ivN, ivY + ivN))
-                        insertRows.append([keyword, ivY + ivN, t[2], campStartDt, insrcompCd, brchCd, spkCd])
+                    if sbDf.count() > 0 and nsbDf.count() > 0 :
+                        # print(sbDf.count())
+                        # print(nsbDf.count())
+                        print('-----------------------------------')
+                        print('{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}'.format('keyword', 'campStartDt', 'insrcompCd', 'brchCd', 'spkCd', 'sbUserCount', 'nsbUserCount', 'Event(Y)', 'Event(N)', 'Non-Event(Y)', 'Non-Event(N)', 'WOE(=Y)', 'WOE(=N)', 'IV(=Y)', 'IV(=N)', 'IV Sum'))
+                        resultDf = sbDf.join(nsbDf, 'keyword', 'inner')
+                        insertRows = [];
+                        for t in resultDf.collect():
+                            try:
+                                keyword = t[0]
+                                eventY = float(t[1]) / float(sbcpMax)
+                                eventN = float(float(sbcpMax) - float(t[1])) / float(sbcpMax)
+                                nonEventY = float(t[2]) / float(nonsbcpMax)
+                                nonEventN = float(float(nonsbcpMax) - float(t[2])) / float(nonsbcpMax)
+                                woeY = math.log(eventY / nonEventY)
+                                woeN = math.log(eventN / nonEventN)
+                                ivY = woeY * (eventY - nonEventY)
+                                ivN = woeN * (eventN - nonEventN)
+                                # print('{0}, {1}, {2}, {3}, {4}'.format(keyword, campStartDt, insrcompCd, brchCd, spkCd))
+                                # print('{0}, {1}'.format(ivY + ivN, t[1] + t[2]))
+                                print('{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14}|{15}'.format(keyword.encode('utf-8'), campStartDt, insrcompCd, brchCd, spkCd, t[1], t[2], eventY, eventN, nonEventY, nonEventN, woeY, woeN, ivY, ivN, ivY + ivN))
+                                insertRows.append([keyword, ivY + ivN, t[2], campStartDt, insrcompCd, brchCd, spkCd])
+                            except ZeroDivisionError as e:
+                                print(e)
+                                pass
+                            except ValueError as e:
+                                print(e)
+                                pass
 
-                    insertDf = ss.createDataFrame(insertRows, schema)
-                    insertDf.write.mode("overwrite").partitionBy("camp_start_dt", "insrcomp_cd", "brch_cd", "spk_cd").format("orc").saveAsTable("ta_keyword_iv")
-                    # ss.sql("show tables").show()
-
-    ss.stop()
+                        insertDf = ss.createDataFrame(insertRows, schema)
+                        insertDf.write.mode("overwrite").partitionBy("camp_start_dt", "insrcomp_cd", "brch_cd", "spk_cd").format("orc").saveAsTable("ta_keyword_iv")
+                        # ss.sql("show tables").show()
+    finally:
+        ss.stop()
 
 
 

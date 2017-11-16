@@ -52,7 +52,7 @@ if __name__ == "__main__":
     createTableSql.append("df int, ")
     createTableSql.append("user_count int ")
     createTableSql.append(") ")
-    createTableSql.append("partitioned by (camp_start_dt string, insrcomp_cd string, brch_cd string, spk_cd string) ")
+    createTableSql.append("partitioned by (camp_start_dt string, insrcomp_cd string, brch_cd string, spk_cd string, call_type string) ")
     createTableSql.append("ROW FORMAT DELIMITED ")
 
     ss.sql(''.join(createTableSql))
@@ -61,11 +61,13 @@ if __name__ == "__main__":
     insrcompCdArray = ['51']
     brchCdArray = ['51', '54', '55']
     spkCdArray = ['f', 'c', 'a']
+    callTypeCdArray = ['sb', 'nsb']
 
     for insrcompCd in insrcompCdArray:
         for brchCd in brchCdArray:
             for spkCd in spkCdArray:
-                ss.sql("INSERT INTO ta_keyword_tfidf PARTITION (camp_start_dt='{0}', insrcomp_cd='{1}', brch_cd='{2}', spk_cd='{3}') select keyword, sum(tf) as tf, count(call_id) as df, count(distinct user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' group by keyword".format(campStartDt, insrcompCd, brchCd, spkCd))
+                for callTypeCd in callTypeCdArray:
+                    ss.sql("INSERT INTO ta_keyword_tfidf PARTITION (camp_start_dt='{0}', insrcomp_cd='{1}', brch_cd='{2}', spk_cd='{3}', call_type='{4}') select keyword, sum(tf) as tf, count(call_id) as df, count(distinct user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(campStartDt, insrcompCd, brchCd, spkCd, callTypeCd))
 
     ss.stop()
 

@@ -1,6 +1,7 @@
 import math
 
 print(math.log(0.156985871/0.191783662))
+print(math.log(0.0/0.0))
 # print(math.log(float(100) / float(6300)))
 
 
