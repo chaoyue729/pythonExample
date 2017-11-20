@@ -9,6 +9,9 @@ from pyspark.sql.functions import *
 from pyspark.sql import functions
 from pyspark.sql.types import *
 from pyspark.sql.window import Window
+import requests
+import time
+import datetime
 import sys
 
 class executeFun():
@@ -23,6 +26,13 @@ class executeFun():
         return ss
 
 if __name__ == "__main__":
+
+    ts = time.time()
+    st = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d%H%M%S%f')
+    URL = 'http://localhost:8080/TA_SKM/ta/openApi/insertMntrLog.do'
+    data = {'jobId': st, 'key': 'WT', 'type': 'M', 'state': 'S', 'serviceKey': 'b7a9dce1-9a39-4382-8b94-910220b5'}
+    res = requests.post(URL, data=data)
+
     ef = executeFun()
     ss = ef.getSparkSession("insert ta_keyword_tfidf", sys.argv[1])
 
@@ -63,13 +73,21 @@ if __name__ == "__main__":
     spkCdArray = ['f', 'c', 'a']
     callTypeCdArray = ['sb', 'nsb']
 
-    for insrcompCd in insrcompCdArray:
-        for brchCd in brchCdArray:
-            for spkCd in spkCdArray:
-                for callTypeCd in callTypeCdArray:
-                    ss.sql("INSERT INTO ta_keyword_tfidf PARTITION (camp_start_dt='{0}', insrcomp_cd='{1}', brch_cd='{2}', spk_cd='{3}', call_type='{4}') select keyword, sum(tf) as tf, count(call_id) as df, count(distinct user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(campStartDt, insrcompCd, brchCd, spkCd, callTypeCd))
+    try:
+        for insrcompCd in insrcompCdArray:
+            for brchCd in brchCdArray:
+                for spkCd in spkCdArray:
+                    for callTypeCd in callTypeCdArray:
+                        ss.sql("INSERT INTO ta_keyword_tfidf PARTITION (camp_start_dt='{0}', insrcomp_cd='{1}', brch_cd='{2}', spk_cd='{3}', call_type='{4}') select keyword, sum(tf) as tf, count(call_id) as df, count(distinct user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(campStartDt, insrcompCd, brchCd, spkCd, callTypeCd))
 
-    ss.stop()
+        data = {'jobId': st, 'key': 'WT', 'type': 'M', 'state': 'E', 'serviceKey': 'b7a9dce1-9a39-4382-8b94-910220b5'}
+        res = requests.post(URL, data=data)
+    except BaseException as e:
+        print(e)
+        data = {'jobId': st, 'key': 'WT', 'type': 'M', 'state': 'B', 'serviceKey': 'b7a9dce1-9a39-4382-8b94-910220b5'}
+        res = requests.post(URL, data=data)
+    finally:
+        ss.stop()
 
 
 # spark-submit --master yarn \

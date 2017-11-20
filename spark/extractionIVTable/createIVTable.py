@@ -10,6 +10,9 @@ from pyspark.sql.functions import *
 from pyspark.sql import functions
 from pyspark.sql.types import *
 from pyspark.sql.window import Window
+import requests
+import time
+import datetime
 import sys
 
 class executeFun():
@@ -26,6 +29,13 @@ class executeFun():
 if __name__ == "__main__":
     # reload(sys)
     # sys.setdefaultencoding('utf-8')
+
+    ts = time.time()
+    st = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d%H%M%S%f')
+    URL = 'http://localhost:8080/TA_SKM/ta/openApi/insertMntrLog.do'
+    data = {'jobId': st, 'key': 'IV', 'type': 'M', 'state': 'S', 'serviceKey': 'b7a9dce1-9a39-4382-8b94-910220b5'}
+    res = requests.post(URL, data=data)
+
 
     ef = executeFun()
     ss = ef.getSparkSession("insert ta_keyword_iv", sys.argv[1])
@@ -73,12 +83,12 @@ if __name__ == "__main__":
         for insrcompCd in insrcompCdArray:
             for brchCd in brchCdArray:
                 for spkCd in spkCdArray:
-                    selectQuery = "select keyword, count(user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(
+                    selectQuery = "select keyword, count(distinct user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(
                         campStartDt, insrcompCd, brchCd, spkCd, 'sb')
                     # print('selectQuery : ' + selectQuery)
                     sbDf = ss.sql(selectQuery)
 
-                    selectQuery = "select keyword, count(user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(
+                    selectQuery = "select keyword, count(distinct user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(
                         campStartDt, insrcompCd, brchCd, spkCd, 'nsb')
                     # print('selectQuery : ' + selectQuery)
                     nsbDf = ss.sql(selectQuery)
@@ -115,6 +125,13 @@ if __name__ == "__main__":
                         insertDf = ss.createDataFrame(insertRows, schema)
                         insertDf.write.mode("overwrite").partitionBy("camp_start_dt", "insrcomp_cd", "brch_cd", "spk_cd").format("orc").saveAsTable("ta_keyword_iv")
                         # ss.sql("show tables").show()
+
+        data = {'jobId': st, 'key': 'IV', 'type': 'M', 'state': 'E', 'serviceKey': 'b7a9dce1-9a39-4382-8b94-910220b5'}
+        res = requests.post(URL, data=data)
+    except BaseException as e:
+        print(e)
+        data = {'jobId': st, 'key': 'IV', 'type': 'M', 'state': 'B', 'serviceKey': 'b7a9dce1-9a39-4382-8b94-910220b5'}
+        res = requests.post(URL, data=data)
     finally:
         ss.stop()
 
