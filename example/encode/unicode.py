@@ -31,4 +31,4 @@ print(bar.encode('utf-8'))
 
 # 유니코드로 다루기 예제3
 foo = u'한글'
-print(str(foo.encode('utf-8')))
+print(foo.encode('utf-8'))

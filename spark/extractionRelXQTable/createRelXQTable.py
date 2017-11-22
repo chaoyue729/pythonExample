@@ -50,6 +50,23 @@ if __name__ == "__main__":
         for brchCd in brchCdArray:
             for spkCd in spkCdArray:
                 start_time = time.time()
+
+                selectQuery = []
+                selectQuery.append("select distinct keyword ")
+                selectQuery.append("from ta_common_keyword ")
+                selectQuery.append("where camp_start_dt='{0}' ")
+                selectQuery.append("and insrcomp_cd='{1}' ")
+                selectQuery.append("and brch_cd='{2}' ")
+                selectQuery.append("and spk_cd='{3}' ")
+                selectQuery.append("and call_type='{4}' ")
+                selectQuery = (''.join(selectQuery)).format(campStartDt, insrcompCd, brchCd, spkCd, 'sb')
+                keywordListDf = ss.sql(selectQuery)
+
+                keywordRdd = keywordListDf.rdd.map(lambda p: p['keyword'].encode('utf-8'))
+                # print(keywordRdd.count())
+                # for t in keywordRdd.collect():
+                #     print("{0} {1}".format(type(t), t))
+
                 selectQuery = []
                 selectQuery.append("select collect_list(keyword) as keywords ")
                 selectQuery.append("from ( ")
@@ -62,22 +79,40 @@ if __name__ == "__main__":
                 selectQuery.append("and call_type='{4}' ")
                 selectQuery.append(") ")
                 selectQuery.append("group by user_id")
-
                 selectQuery = (''.join(selectQuery)).format(campStartDt, insrcompCd, brchCd, spkCd, 'sb')
                 print('selectQuery : ' + selectQuery)
                 collectListDf = ss.sql(selectQuery)
-                rdd1 = collectListDf.rdd.map(lambda p: (p['keywords']))
-                # print(rdd1.count());
-                rdd2 = rdd1.filter(lambda k : k.index(unicode('다이퀘스트', 'utf-8')) > -1)
-                for r in rdd2.collect():
-                    print(r)
+
+                # rdd1 = collectListDf.rdd.map(lambda p: (p['keywords']))
+                collectListRdd = collectListDf.rdd.map(lambda p: (','.join(p['keywords']).encode('utf-8')))
 
 
 
+                for keywordT in keywordRdd.collect():
+                    print(">>>> {0}".format(keywordT))
+                    for keywordC in keywordRdd.collect():
+                        if( keywordT != keywordC) :
+                            print(">>>> >>>>> {0}".format(keywordC))
 
 
-                # for t in collectListDf.collect():
-                #     print(t[0].encode('utf-8'))
+                            # incincRdd = collectListRdd.filter(lambda k: k.find(keywordT) > -1 and k.find(keywordC) > -1)
+                            # incexcRdd = collectListRdd.filter(lambda k: k.find(keywordT) > -1 and k.find(keywordC) == -1)
+                            # excincRdd = collectListRdd.filter(lambda k: k.find(keywordT) == -1 and k.find(keywordC) > -1)
+                            # excexcRdd = collectListRdd.filter(lambda k: k.find(keywordT) == -1 and k.find(keywordC) == -1)
+                            # incincCount = incincRdd.count()
+                            # incexcCount = incexcRdd.count()
+                            # excincCount = excincRdd.count()
+                            # excexcCount = excexcRdd.count()
+
+                            # incRdd = collectListRdd.filter(lambda k: k.find(keywordT) > -1)
+                            # incincRdd = incRdd.filter(lambda k : k.find(keywordC) > -1)
+                            # excRdd = collectListRdd.filter(lambda k: k.find(keywordT) == -1)
+                            # excincRdd = excRdd.filter(lambda k: k.find(keywordC) > -1)
+                            # incincCount = incincRdd.count()
+                            # incexcCount = incRdd.count() - incincCount
+                            # excincCount = excincRdd.count()
+                            # excexcCount = excRdd.count() - excincCount
+
 
                 print("--- %s seconds ---" % (time.time() - start_time))
 
