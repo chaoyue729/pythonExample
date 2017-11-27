@@ -17,7 +17,7 @@
       <file leaf-file-name="createIVTable.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spark/extractionIVTable/createIVTable.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
+            <state relative-caret-position="0">
               <caret line="112" column="54" lean-forward="false" selection-start-line="112" selection-start-column="54" selection-end-line="112" selection-end-column="54" />
               <folding>
                 <element signature="e#24#42#0" expanded="true" />
@@ -29,8 +29,8 @@
       <file leaf-file-name="createHiveTable.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spark/createHiveTable/createHiveTable.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="22" />
               <folding>
                 <element signature="e#24#42#0" expanded="true" />
               </folding>
@@ -41,8 +41,8 @@
       <file leaf-file-name="createHiveTable.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../eclipse_workspace/TA_PAL/spark/createHiveTable/createHiveTable.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="22" column="16" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="86" selection-end-column="45" />
+            <state relative-caret-position="195">
+              <caret line="22" column="16" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="86" selection-end-column="45" />
               <folding>
                 <element signature="e#24#42#0" expanded="true" />
               </folding>
@@ -50,14 +50,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="createMappingTable.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="createMappingTable.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spark/createHiveTable/createMappingTable.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="51" column="40" lean-forward="true" selection-start-line="51" selection-start-column="40" selection-end-line="51" selection-end-column="40" />
+            <state relative-caret-position="71">
+              <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
               <folding>
                 <element signature="e#24#42#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="numpyArray.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/example/array/numpyArray.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -89,7 +99,7 @@
       <file leaf-file-name="requestsExample.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/http/requestsExample.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
+            <state relative-caret-position="165">
               <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding />
             </state>
@@ -102,30 +112,6 @@
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="createTFIDFTable.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spark/extractionTFIDFTable/createTFIDFTable.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="22" />
-              <folding>
-                <marker date="1511302852000" expanded="true" signature="3894:4121" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="exampleTFIDF.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spark/extractionTFIDFTable/exampleTFIDF.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding>
-                <element signature="e#24#42#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -191,6 +177,7 @@
         <option value="$PROJECT_DIR$/spark/extractionIVTable/createIVTable.py" />
         <option value="$PROJECT_DIR$/../../eclipse_workspace/TA_PAL/spark/createHiveTable/createMappingTable.py" />
         <option value="$PROJECT_DIR$/spark/createHiveTable/createMappingTable.py" />
+        <option value="$PROJECT_DIR$/example/array/numpyArray.py" />
       </list>
     </option>
   </component>
@@ -219,12 +206,24 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="pythonExample" type="b2602c69:ProjectViewProjectNode" />
               <item name="pythonExample" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pythonExample" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pythonExample" type="462c0819:PsiDirectoryNode" />
+              <item name="example" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="pythonExample" type="b2602c69:ProjectViewProjectNode" />
+              <item name="pythonExample" type="462c0819:PsiDirectoryNode" />
+              <item name="example" type="462c0819:PsiDirectoryNode" />
+              <item name="array" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="pythonExample" type="b2602c69:ProjectViewProjectNode" />
@@ -268,7 +267,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -398,7 +396,7 @@
     <frame x="21" y="23" width="1177" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33744493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34361234" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -426,7 +424,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/example/WordAnalysisForFile.py" />
     <entry file="file://$PROJECT_DIR$/example/SubscriptionManager.py" />
     <entry file="file://$PROJECT_DIR$/example/CallTextManager.py" />
     <entry file="file://$PROJECT_DIR$/example/WordAnalysisForFile.py" />
@@ -455,13 +452,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="43" lean-forward="true" selection-start-line="0" selection-start-column="43" selection-end-line="0" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/array/arrayTest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -589,7 +579,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -597,23 +586,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="22" />
-          <folding>
-            <marker date="1511302852000" expanded="true" signature="3894:4121" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spark/extractionTFIDFTable/exampleTFIDF.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="e#24#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spark/createHiveTable/createHiveTable.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
@@ -654,7 +631,7 @@
     <entry file="file://$PROJECT_DIR$/example/http/requests.py" />
     <entry file="file://$PROJECT_DIR$/example/http/requestsExample.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
+        <state relative-caret-position="165">
           <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
         </state>
@@ -662,7 +639,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spark/extractionIVTable/createIVTable.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
+        <state relative-caret-position="0">
           <caret line="112" column="54" lean-forward="false" selection-start-line="112" selection-start-column="54" selection-end-line="112" selection-end-column="54" />
           <folding>
             <element signature="e#24#42#0" expanded="true" />
@@ -672,8 +649,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../eclipse_workspace/TA_PAL/spark/createHiveTable/createHiveTable.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="22" column="16" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="86" selection-end-column="45" />
+        <state relative-caret-position="195">
+          <caret line="22" column="16" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="86" selection-end-column="45" />
           <folding>
             <element signature="e#24#42#0" expanded="true" />
           </folding>
@@ -682,11 +659,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spark/createHiveTable/createMappingTable.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="51" column="40" lean-forward="true" selection-start-line="51" selection-start-column="40" selection-end-line="51" selection-end-column="40" />
+        <state relative-caret-position="71">
+          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
           <folding>
             <element signature="e#24#42#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/array/arrayTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spark/createHiveTable/createHiveTable.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="22" />
+          <folding>
+            <element signature="e#24#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/array/numpyArray.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
