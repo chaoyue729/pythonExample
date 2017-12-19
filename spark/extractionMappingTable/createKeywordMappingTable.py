@@ -31,7 +31,7 @@ if __name__ == "__main__":
     # sys.setdefaultencoding('utf-8')
 
     ef = executeFun()
-    ss = ef.getSparkSession("insert ta_keyword mapping", sys.argv[1])
+    ss = ef.getSparkSession("create ta_keyword_mapping table", sys.argv[1])
 
     campStartDt = '201709'
 
@@ -59,7 +59,13 @@ if __name__ == "__main__":
             insertRows = []
             for t in mappingDf.collect():
                 try:
-                    insertRows.append([t[0], t[1], campStartDt])
+                    if t[0] == None :
+                        print("{0} {1}".format(t[0], "None"))
+                        continue
+                    elif t[0] == "" :
+                        print("{0} {1}".format(t[0], "space"))
+                    else :
+                        insertRows.append([t[0], t[1], campStartDt])
                 except ZeroDivisionError as e:
                     print(e)
                     pass
@@ -68,7 +74,8 @@ if __name__ == "__main__":
                     pass
 
             insertDf = ss.createDataFrame(insertRows, schema)
-            insertDf.write.mode("overwrite").partitionBy("camp_start_dt").format("orc").saveAsTable("ta_keyword_mapping")
+            # insertDf.write.mode("overwrite").partitionBy("camp_start_dt").format("orc").saveAsTable("ta_keyword_mapping")
+            insertDf.write.format("orc").insertInto("ta_keyword_mapping")
             # ss.sql("show tables").show()
 
     except BaseException as e:
@@ -78,4 +85,4 @@ if __name__ == "__main__":
 
 
 
-# spark-submit createMappingTable.py yarn
+# spark-submit createKeywordMappingTable.py yarn
