@@ -1,5 +1,21 @@
-a = [ "AAA", "BBB", "CCC" ]
+#-*- coding: utf-8 -*-
 
+a = b = c = d = 0
+print(a)
+a += 1
+print(a)
+print(b)
+
+a = [ "AAA", "BBB", "CCC" ]
+b = [ 1 ,2 ,3, 435, 643, 525]
+
+print("{0}".format(len(a)))
+print(a[0])
+print(1 not in b)
+
+str1 = ','.join(str(e) for e in b)
+print(str1)
+# print(a.index("ddd"))
 
 # 맨 앞에 새 요소 추가
 a.insert(0, "똠방각하")

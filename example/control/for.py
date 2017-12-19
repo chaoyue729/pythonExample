@@ -1,6 +1,6 @@
 a = [None] * 10
-for i in a:
-    print(i)
+for i, v in enumerate(a):
+    print(i, v)
 
 for i in range(0, 11):
     print(i)
