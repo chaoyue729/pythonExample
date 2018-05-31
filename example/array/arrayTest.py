@@ -8,6 +8,7 @@ print(b)
 
 a = [ "AAA", "BBB", "CCC" ]
 b = [ 1 ,2 ,3, 435, 643, 525]
+c = [ "네 네 네 아 네네 지금 통화 좀 가능하시죠" ,"아 네 아 아니 잠깐만 아니라 가지구요" ,"그리고 제가 보내드릴까요"]
 
 print("{0}".format(len(a)))
 print(a[0])
@@ -15,6 +16,8 @@ print(1 not in b)
 
 str1 = ','.join(str(e) for e in b)
 print(str1)
+str2 = ','.join(str(e) for e in c)
+print(str2)
 # print(a.index("ddd"))
 
 # 맨 앞에 새 요소 추가

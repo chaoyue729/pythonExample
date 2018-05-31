@@ -3,7 +3,8 @@ import socket
 
 s = socket.socket()
 host = socket.gethostname()
-port = 56789
+host = '192.168.30.157'
+port = 12222
 
 s.connect((host, port))
 print( 'Connected to', host)
