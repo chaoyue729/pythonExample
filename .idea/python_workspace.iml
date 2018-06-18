@@ -5,6 +5,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="TA_PAL" />
+    <orderEntry type="module" module-name="deeplearning" />
+    <orderEntry type="module" module-name="deeplearning" />
   </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="Nosetests" />

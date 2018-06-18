@@ -15,3 +15,5 @@ ds2.pprint()
 
 ssc.start()
 ssc.awaitTermination()
+
+# spark-submit --master yarn --jars spark-streaming-kafka-0-8-assembly_2.11-2.1.1.jar kafka_sample.py
