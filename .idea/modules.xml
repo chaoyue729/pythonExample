@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../../eclipse_workspace/TA_PAL/.idea/TA_PAL.iml" filepath="$PROJECT_DIR$/../../eclipse_workspace/TA_PAL/.idea/TA_PAL.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../example_source/tensorflow/everyone_deeplearning/.idea/deeplearning.iml" filepath="$PROJECT_DIR$/../../example_source/tensorflow/everyone_deeplearning/.idea/deeplearning.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../example_source/keras/everyone_deeplearning/.idea/deeplearning.iml" filepath="$PROJECT_DIR$/../../example_source/keras/everyone_deeplearning/.idea/deeplearning.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/python_workspace.iml" filepath="$PROJECT_DIR$/.idea/python_workspace.iml" />
     </modules>
   </component>

@@ -11,6 +11,7 @@ from keras.layers import Dense, LSTM, Embedding
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from keras.utils import np_utils
+from keras.callbacks import ModelCheckpoint,EarlyStopping
 
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -140,8 +141,34 @@ def save_model(tp):
                   optimizer='adam',
                   metrics=['accuracy'])
 
+    # 모델 저장 폴더 만들기
+    MODEL_DIR = './model/'
+    if not os.path.exists(MODEL_DIR):
+        os.mkdir(MODEL_DIR)
+
+    modelpath = "./model/{epoch:02d}-{val_loss:.4f}.hdf5"
+
+    # 모델 업데이트 및 저장
+    checkpointer = ModelCheckpoint(filepath=modelpath, monitor='val_loss', verbose=1, save_best_only=True)
+
+    # 학습 자동 중단 설정
+    early_stopping_callback = EarlyStopping(monitor='val_loss', patience=100)
+
     # 모델의 실행
-    history = model.fit(x_train, y_train, batch_size=100, epochs=10, validation_data=(x_test, y_test))
+    history = model.fit(x_train, y_train, validation_split=0.2, batch_size=100, epochs=10, verbose=0, validation_data=(x_test, y_test), callbacks=[early_stopping_callback, checkpointer])
+
+    # y_vloss에 테스트셋으로 실험 결과의 오차 값을 저장
+    y_vloss = history.history['val_loss']
+
+    # y_acc 에 학습 셋으로 측정한 정확도의 값을 저장
+    y_acc = history.history['acc']
+
+    # x값을 지정하고 정확도를 파란색으로, 오차를 빨간색으로 표시
+    x_len = np.arange(len(y_acc))
+    plt.plot(x_len, y_vloss, "o", c="red", markersize=3)
+    plt.plot(x_len, y_acc, "o", c="blue", markersize=3)
+
+    plt.show()
 
     # 테스트 정확도 출력
     print("\n Test Accuracy: %.4f" % (model.evaluate(x_test, y_test)[1]))
