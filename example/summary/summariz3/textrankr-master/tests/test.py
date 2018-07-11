@@ -14,6 +14,7 @@ class TestReordered(unittest.TestCase):
 
     def test_ranked(self):
         textrank = TextRank(self.text)
+        # print(textrank.summarize())
         self.assertEqual(textrank.summarize(1), "트위터, \"정보당국에 데이터 분석자료 팔지 않겠다\".")
 
 
