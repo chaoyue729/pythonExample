@@ -81,39 +81,37 @@ if __name__ == "__main__":
     schema = StructType([sf1, sf2, sf3, sf4, sf5, sf6, sf7])
 
     selectQueryArray = []
+    selectQueryArray.append("select count(distinct user_id) ")
+    selectQueryArray.append("from ta_common_keyword ")
+    selectQueryArray.append("where camp_start_dt='{0}' ")
+    selectQueryArray.append("and insrcomp_cd='{1}' ")
+    selectQueryArray.append("and call_type='{2}' ")
+    selectQuery = (''.join(selectQueryArray)).format(campStartDt, insrcompCdArray[0], 'sb')
+    sbTotalCountDf = ss.sql(selectQuery)
+    for n in sbTotalCountDf.collect():
+        sbcpMax = n[0]
+        print(type(sbcpMax))
+        print(sbcpMax)
+
+    selectQueryArray = []
+    selectQueryArray.append("select count(distinct user_id) ")
+    selectQueryArray.append("from ta_common_keyword ")
+    selectQueryArray.append("where camp_start_dt='{0}' ")
+    selectQueryArray.append("and insrcomp_cd='{1}' ")
+    selectQueryArray.append("and call_type='{2}' ")
+    selectQuery = (''.join(selectQueryArray)).format(campStartDt, insrcompCdArray[0], 'nsb')
+    nsbTotalCountDf = ss.sql(selectQuery)
+    for n in nsbTotalCountDf.collect():
+        nonsbcpMax = n[0]
+        print(type(nonsbcpMax))
+        print(nonsbcpMax)
+
     insertQueryArray = [];
 
 
     try :
         for insrcompCd in insrcompCdArray:
             for brchCd in brchCdArray:
-
-                selectQueryArray = []
-                selectQueryArray.append("select count(distinct user_id) ")
-                selectQueryArray.append("from ta_common_keyword ")
-                selectQueryArray.append("where camp_start_dt='{0}' ")
-                selectQueryArray.append("and insrcomp_cd='{1}' ")
-                selectQueryArray.append("and brch_cd='{2}' ")
-                selectQueryArray.append("and call_type='{3}' ")
-                selectQuery = (''.join(selectQueryArray)).format(campStartDt, insrcompCd, brchCd, 'sb')
-                sbTotalCountDf = ss.sql(selectQuery)
-                for n in sbTotalCountDf.collect():
-                    sbcpMax = n[0]
-                    print("{0} {1} {2} sb max count : {3}".format(campStartDt, insrcompCd, brchCd, sbcpMax))
-
-                selectQueryArray = []
-                selectQueryArray.append("select count(distinct user_id) ")
-                selectQueryArray.append("from ta_common_keyword ")
-                selectQueryArray.append("where camp_start_dt='{0}' ")
-                selectQueryArray.append("and insrcomp_cd='{1}' ")
-                selectQueryArray.append("and brch_cd='{2}' ")
-                selectQueryArray.append("and call_type='{3}' ")
-                selectQuery = (''.join(selectQueryArray)).format(campStartDt, insrcompCd, brchCd, 'nsb')
-                nsbTotalCountDf = ss.sql(selectQuery)
-                for n in nsbTotalCountDf.collect():
-                    nonsbcpMax = n[0]
-                    print("{0} {1} {2} nsb max count : {3}".format(campStartDt, insrcompCd, brchCd, nonsbcpMax))
-
                 for spkCd in spkCdArray:
                     selectQuery = "select keyword, count(distinct user_id) as user_count from ta_common_keyword where camp_start_dt='{0}' and insrcomp_cd='{1}' and brch_cd='{2}' and spk_cd='{3}' and call_type='{4}' group by keyword".format(
                         campStartDt, insrcompCd, brchCd, spkCd, 'sb')
