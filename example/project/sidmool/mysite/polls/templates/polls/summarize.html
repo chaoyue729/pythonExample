@@ -1,0 +1,29 @@
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'polls:summarize' %}" method="post">
+{% csrf_token %}
+<textarea name="context" rows="16" cols="80">{{ context }}</textarea>
+<br>
+<textarea name="summarize" rows="8" cols="80">{{ summarize }}</textarea>
+<br>
+<!-- <input type="reset" value="reset"> -->
+<input type="button" id="remove" value="remove">
+<input type="submit" value="Summarize">
+</form>
+
+<script>
+  document.querySelector('#remove').addEventListener("click", function(){
+    document.querySelector('textarea[name=context]').value = '';
+    document.querySelector('textarea[name=summarize]').value = '';
+  });
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-46960124-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-46960124-2');
+</script>

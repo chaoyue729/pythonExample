@@ -21,8 +21,6 @@ logging.basicConfig(level=logging.ERROR)
 sleepSecond = 2
 domain = 'http://www.sidmool.com'
 csvPath = '/Users/whitexozu/dev/pycharm_workspace/pythonExample/example/soup/'
-csvFile = 'temp.csv'
-jsonFile = 'result.json'
 
 # python파일의 위치
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

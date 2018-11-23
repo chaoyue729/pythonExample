@@ -1,0 +1,35 @@
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<br>
+<form action="{% url 'polls:cosmetics' %}" method="post">
+  {% csrf_token %}
+  <select id="choose" name="choose"></select>
+  <br>
+  <h3>choose cosmetic : {{choose_name}}</h3>
+  <br>
+  <h3>accuracy value : {{choose_accuracy}}</h3>
+  <input type="submit" value="submit">
+</form>
+<script type="text/javascript">
+  var temp = '{{cosmetics_all_to_json|safe}}';
+  // console.log(typeof(temp));
+  var c = document.getElementById("choose");
+  JSON.parse(temp).forEach(function(e, i) {
+    var o = document.createElement("option");
+    o.text = e.name;
+    o.value = e.value;
+    if(e.name.indexOf('크림') > -1)
+      c.options.add(o);
+    // console.log(e);
+  });
+  // console.log('temp', temp);
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-46960124-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-46960124-2');
+</script>
