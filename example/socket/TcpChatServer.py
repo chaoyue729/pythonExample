@@ -1,11 +1,11 @@
-# -*- coding: utf8 -*-
+#!/usr/bin/env python3 
+# -*- coding: utf-8 -*- 
 
 # socket 과 select 모듈 임포트
 from socket import *
 from select import *
 import sys
 from time import ctime
-
 
 # 호스트, 포트와 버퍼 사이즈를 지정
 HOST = ''
@@ -45,19 +45,21 @@ while connection_list:
                 for socket_in_list in connection_list:
                     if socket_in_list != serverSocket and socket_in_list != sock:
                         try:
-                            socket_in_list.send('[%s] 새로운 방문자가 대화방에 들어왔습니다. 반가워요~ 짝짝짝!' % ctime())
+                            socket_in_list.send(('[%s] 새로운 방문자가 대화방에 들어왔습니다. 반가워요~ 짝짝짝!' % ctime()).encode('utf-8'))
+                            # socket_in_list.send({'str':'새로운 방문자가 대화방에 들어왔습니다. 반가워요~ 짝짝짝!'})
                         except Exception as e:
+                            print(e.message)
                             socket_in_list.close()
                             connection_list.remove(socket_in_list)
             # 접속한 사용자(클라이언트)로부터 새로운 데이터 받음
             else:
-                data = sock.recv(BUFSIZE)
+                data = sock.recv(BUFSIZE).decode('utf-8')
                 if data:
                     print('[INFO][%s] 클라이언트로부터 데이터를 전달 받았습니다.' % ctime())
                     for socket_in_list in connection_list:
                         if socket_in_list != serverSocket and socket_in_list != sock:
                             try:
-                                socket_in_list.send('[%s] %s' % (ctime(), data))
+                                socket_in_list.send(('[%s] %s' % (ctime(), data)).encode('utf-8'))
                                 print('[INFO][%s] 클라이언트로 데이터를 전달합니다.' % ctime())
                             except Exception as e:
                                 print(e.message)
