@@ -41,6 +41,11 @@ while True:
                     sys.exit()
                 else:
                     print('%s' % data.decode('utf-8'))  # 메세지 시간은 서버 시간을 따른다
+                    prompt()
+            else:
+                message = sys.stdin.readline()
+                clientSocket.send(message.encode('utf-8'))
+                prompt()
     except KeyboardInterrupt:
         clientSocket.close()
         sys.exit()

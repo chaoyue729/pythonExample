@@ -71,7 +71,13 @@ def setCallData(callNumbers, testFileDir):
 
     return callDataDict
 
-def runServer(addr, bufsize):
+def runServer(**options):
+
+    addr = options['addr']
+    bufsize = options['bufsize']
+    nps = options['nps']
+    aps = options['aps']
+
     # 소켓 객체를 만들고..
     serverSocket = socket(AF_INET, SOCK_STREAM)
 
@@ -93,14 +99,11 @@ def runServer(addr, bufsize):
             # select 로 요청을 받고, 10초마다 블럭킹을 해제하도록 함
             read_socket, write_socket, error_socket = select(connection_list, [], [], 0.1)
 
-            print('-->' + str(connection_list))
+            print('connectionList : ' + str(connection_list))
             # print('-->' + str(read_socket) + " : " + str(write_socket) + " : " + str(error_socket))
-            print(str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+            print('now : ' + str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")))
             for sock in read_socket:
                 # 새로운 접속
-
-                # print('>>' + str(sock))
-                # print('>>' + str(serverSocket))
                 if sock == serverSocket:
                     clientSocket, addr_info = serverSocket.accept()
                     connection_list.append(clientSocket)
@@ -111,20 +114,37 @@ def runServer(addr, bufsize):
                     data = sock.recv(bufsize).decode('utf-8')
                     if data:
                         print('[INFO][%s] 클라이언트로부터 데이터를 전달 받았습니다.' % ctime())
-                        for socket_in_list in connection_list:
-                            if socket_in_list != serverSocket and socket_in_list != sock:
-                                try:
-                                    socket_in_list.send(('[%s] %s' % (ctime(), data)).encode('utf-8'))
-                                    print('[INFO][%s] 클라이언트로 데이터를 전달합니다.' % ctime())
-                                except Exception as e:
-                                    print(e.message)
-                                    socket_in_list.close()
-                                    connection_list.remove(socket_in_list)
-                                    continue
+                        try:
+                            # nps, aps 수정
+                            # ex) {nps:5, aps:10}
+                            # data 정보를 parsing 하여 형식이 일치하면 수정
+                            # aps 이상의 값은 agents 초기화
+                            print('[INFO][%s] 설정 정보를 변경합니다.' % ctime())
+                        except Exception as e:
+                            print(e.message)
+                            socket_in_list.close()
+                            connection_list.remove(socket_in_list)
+                            continue
                     else:
                         connection_list.remove(sock)
                         sock.close()
                         print('[INFO][%s] 사용자와의 연결이 끊어졌습니다.' % ctime())
+
+            # 접속자에게 데이터 전달, 접속자가 없을경우 전달하지 않고 데이터 손실
+            slppeSecond = float("{0:.2f}".format(nps / aps - 0.005))
+            print('slppeSecond : ' + str(slppeSecond))
+            print('agents len : ' + str(len(options['agents'])))
+            for agent in options['agents'][:( aps if len(options['agents']) > aps else len(options['agents']) )]:
+                for clientSocket in connection_list:
+                    if clientSocket != serverSocket:
+                        try:
+                            clientSocket.send((agent.getCallData()).encode('utf-8'))
+                        except Exception as e:
+                            print(e.message)
+                            socket_in_list.close()
+                            connection_list.remove(socket_in_list)
+                time.sleep(slppeSecond)
+            print('사용자에게 전달 종료')
         except KeyboardInterrupt:
             # 부드럽게 종료하기
             serverSocket.close()
@@ -136,6 +156,11 @@ def main():
     port = 27029
     bufsize = 1024
     addr = (host, port)
+
+    # 초당 건수
+    nps = 5
+    # 초당 상담원수
+    aps = 3
 
     # test data 정보
     # testFileDir = '/Users/whitexozu/dev/data/KB/stt/seoul/text/20180219/10'   #6812
@@ -162,6 +187,6 @@ def main():
 
     print('+++ STT 서버를 시작')
     print('+++ STT 서버를 끝내려면 Ctrl-C를 누르세요.')
-    runServer(addr, bufsize)
+    runServer(addr=addr, bufsize=bufsize, nps=nps, aps=aps, agents=agents)
 
 main()

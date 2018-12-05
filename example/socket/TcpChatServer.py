@@ -1,6 +1,10 @@
 #!/usr/bin/env python3 
 # -*- coding: utf-8 -*- 
 
+'''
+sudo lsof -i tcp:56789
+'''
+
 # socket 과 select 모듈 임포트
 from socket import *
 from select import *
