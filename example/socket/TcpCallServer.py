@@ -91,15 +91,16 @@ def runServer(addr, bufsize):
             print('[INFO] 요청을 기다립니다...')
 
             # select 로 요청을 받고, 10초마다 블럭킹을 해제하도록 함
-            read_socket, write_socket, error_socket = select(connection_list, [], [], 10)
+            read_socket, write_socket, error_socket = select(connection_list, [], [], 0.1)
 
             print('-->' + str(connection_list))
-            print('-->' + str(read_socket) + " : " + str(write_socket) + " : " + str(error_socket))
+            # print('-->' + str(read_socket) + " : " + str(write_socket) + " : " + str(error_socket))
+            print(str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             for sock in read_socket:
                 # 새로운 접속
 
-                print('>>' + str(sock))
-                print('>>' + str(serverSocket))
+                # print('>>' + str(sock))
+                # print('>>' + str(serverSocket))
                 if sock == serverSocket:
                     clientSocket, addr_info = serverSocket.accept()
                     connection_list.append(clientSocket)
