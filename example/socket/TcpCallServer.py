@@ -111,10 +111,11 @@ def runServer(**options):
 
                 # 접속한 사용자(클라이언트)로부터 새로운 데이터 받음
                 else:
-                    data = sock.recv(bufsize).decode('utf-8')
+
                     if data:
                         print('[INFO][%s] 클라이언트로부터 데이터를 전달 받았습니다.' % ctime())
                         try:
+                            data = sock.recv(bufsize).decode('utf-8')
                             # nps, aps 수정
                             # ex) {nps:5, aps:10}
                             # data 정보를 parsing 하여 형식이 일치하면 수정
