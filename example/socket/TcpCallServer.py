@@ -121,7 +121,7 @@ def runServer(**options):
                             # aps 이상의 값은 agents 초기화
                             print('[INFO][%s] 설정 정보를 변경합니다.' % ctime())
                         except Exception as e:
-                            print(e.message)
+                            print(e)
                             socket_in_list.close()
                             connection_list.remove(socket_in_list)
                             continue
@@ -140,7 +140,7 @@ def runServer(**options):
                         try:
                             clientSocket.send((agent.getCallData()).encode('utf-8'))
                         except Exception as e:
-                            print(e.message)
+                            print(e)
                             socket_in_list.close()
                             connection_list.remove(socket_in_list)
                 time.sleep(slppeSecond)
