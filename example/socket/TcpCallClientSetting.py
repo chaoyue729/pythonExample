@@ -22,26 +22,30 @@ print('채팅 서버(%s:%s)에 연결 되었습니다.' % addr)
 
 
 def prompt():
-    sys.stdout.write('<나> ')
+    sys.stdout.write('설정 정보\n')
+    sys.stdout.write('ex) {"wc":10, "ac":10}\n')
+    sys.stdout.write(':')
     sys.stdout.flush()
 
 # 무한 루프를 시작
+prompt()
 while True:
     try:
         connection_list = [sys.stdin, clientSocket]
 
         read_socket, write_socket, error_socket = select(connection_list, [], [], 10)
 
+
+
         for sock in read_socket:
             if sock == clientSocket:
                 data = sock.recv(bufsize)
                 if not data:
-                    print('채팅 서버(%s:%s)와의 연결이 끊어졌습니다.' % ADDR)
+                    print('채팅 서버(%s:%s)와의 연결이 끊어졌습니다.' % addr)
                     clientSocket.close()
                     sys.exit()
                 else:
-                    print('%s' % data.decode('utf-8'))  # 메세지 시간은 서버 시간을 따른다
-                    prompt()
+                    pass
             else:
                 message = sys.stdin.readline()
                 clientSocket.send(message.encode('utf-8'))

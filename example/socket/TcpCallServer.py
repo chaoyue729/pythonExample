@@ -38,14 +38,17 @@ def getJsonStr(callNumber, speaker, sTime, eTime, sentence, status):
     jsonStr = "{{'callNumber':'{0}', 'speaker':'{1}', 'sTime':'{2}', 'eTime':'{3}', 'sentence':'{4}', 'status':'{5}'}}".format(callNumber, speaker, sTime, eTime, sentence, status)
     return jsonStr
 
-def setCallData(callNumbers, testFileDir):
+def setCallData(**options):
+    callNumbers = options['callNumbers']
+    testFileDir = options['testFileDir']
+
     callDataDict = {}
     for callNumber in callNumbers:
         callDataDict[callNumber] = []
 
     try:
         fileNames = os.listdir(testFileDir)
-        for fileName in fileNames:
+        for fileIdx, fileName in enumerate(fileNames):
             fullFileName = os.path.join(testFileDir, fileName)
             if os.path.isdir(fullFileName):
                 setCallData(callNumbers, fullFileName)
@@ -54,7 +57,11 @@ def setCallData(callNumbers, testFileDir):
                 # baseName = os.path.splitext(fileName)[0]
                 if ext == '.dat':
                     f = open(fullFileName, 'r', encoding='utf-8')
-                    cn = random.choice(callNumbers)
+                    if options['rf']:
+                        cn = random.choice(callNumbers)
+                    else:
+                        cn = callNumbers[fileIdx % 10]
+
                     callDataDict[cn].append(getJsonStr(cn, '', '', '', '', 'start'))
 
                     while True:
@@ -75,8 +82,8 @@ def runServer(**options):
 
     # addr = options['addr']
     # bufsize = options['bufsize']
-    nps = options['nps']
-    aps = options['aps']
+    wc = options['wc']
+    ac = options['ac']
 
     # 소켓 객체를 만들고..
     serverSocket = socket(AF_INET, SOCK_STREAM)
@@ -86,66 +93,72 @@ def runServer(**options):
 
     # 요청을 기다림(listen)
     serverSocket.listen(10)
-    connection_list = [serverSocket]
+    connectionList = [serverSocket]
     print('==============================================')
     print('채팅 서버를 시작합니다. %s 포트로 접속을 기다립니다.' % str(options['addr'][1]))
     print('==============================================')
 
     # 무한 루프를 시작
-    while connection_list:
+    while connectionList:
         try:
             print('[INFO] 요청을 기다립니다...')
 
             # select 로 요청을 받고, 10초마다 블럭킹을 해제하도록 함
-            read_socket, write_socket, error_socket = select(connection_list, [], [], 0.1)
+            read_socket, write_socket, error_socket = select(connectionList, [], [], 0.1)
 
-            print('connectionList : ' + str(connection_list))
-            # print('-->' + str(read_socket) + " : " + str(write_socket) + " : " + str(error_socket))
-            print('now : ' + str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")))
+            print('[INFO][{0}] 접속자수 : {1}'.format(ctime(), len(connectionList) - 1))
+            # print('[INFO] now : ' + str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")))
             for sock in read_socket:
                 # 새로운 접속
                 if sock == serverSocket:
                     clientSocket, addr_info = serverSocket.accept()
-                    connection_list.append(clientSocket)
-                    print('[INFO][%s] 클라이언트(%s)가 새롭게 연결 되었습니다.' % (ctime(), addr_info[0]))
+                    connectionList.append(clientSocket)
+                    print('[INFO][{0}] 클라이언트({1})가 새롭게 연결 되었습니다.'.format(ctime(), addr_info[0]))
 
                 # 접속한 사용자(클라이언트)로부터 새로운 데이터 받음
                 else:
                     data = sock.recv(options['bufsize'])
                     if data:
-                        print('[INFO][%s] 클라이언트로부터 데이터를 전달 받았습니다.' % ctime())
-                        try:
-                            data = data.decode('utf-8')
-                            # nps, aps 수정
-                            # ex) {nps:5, aps:10}
-                            # data 정보를 parsing 하여 형식이 일치하면 수정
-                            # aps 이상의 값은 agents 초기화
-                            print('[INFO][%s] 설정 정보를 변경합니다.' % ctime())
-                        except Exception as e:
-                            print(e)
-                            socket_in_list.close()
-                            connection_list.remove(socket_in_list)
-                            continue
+                        print('[INFO][{0}] 클라이언트로부터 데이터를 전달 받았습니다.'.format(ctime()))
+                        for clientSocket in connectionList:
+                            if clientSocket != serverSocket and clientSocket == sock:
+                                try:
+                                    data = data.decode('utf-8')
+                                    data = json.loads(data)
+                                    # wc, ac 수정
+                                    # ex) {wc:5, ac:10}
+                                    # data 정보를 parsing 하여 형식이 일치하면 수정
+                                    wc = data['wc']
+                                    ac = data['ac']
+                                    print('[INFO][{0}] 설정 정보 wc:{1}, ac:{2} 변경합니다.'.format(ctime(), wc, ac))
+                                except Exception as e:
+                                    print(e)
+                                    clientSocket.close()
+                                    connectionList.remove(clientSocket)
+                                    continue
                     else:
-                        connection_list.remove(sock)
+                        connectionList.remove(sock)
                         sock.close()
-                        print('[INFO][%s] 사용자와의 연결이 끊어졌습니다.' % ctime())
+                        print('[INFO][{0}] 사용자와의 연결이 끊어졌습니다.'.format(ctime()))
 
             # 접속자에게 데이터 전달, 접속자가 없을경우 전달하지 않고 데이터 손실
-            slppeSecond = float("{0:.2f}".format(nps / aps - 0.005))    # 내림
-            print('slppeSecond : ' + str(slppeSecond))
-            print('agents len : ' + str(len(options['agents'])))
-            for agent in options['agents'][:( aps if len(options['agents']) > aps else len(options['agents']) )]:
-                for clientSocket in connection_list:
+            # agents 보다 ac 가 크면 agents 로 초기화
+            ac = ac if len(options['agents']) > ac else len(options['agents'])
+            slppeSecond = float("{0:.2f}".format(wc / ac - 0.005))    # 내림
+            print('[INFO][{0}] slppeSecond : {1}'.format(ctime(), slppeSecond))
+            print('[INFO][{0}] agents len : {1}'.format(ctime(), len(options['agents'])))
+            for agent in options['agents'][:ac]:
+                sendData = agent.getCallData()
+                for clientSocket in connectionList:
                     if clientSocket != serverSocket:
                         try:
-                            clientSocket.send((agent.getCallData()).encode('utf-8'))
+                            clientSocket.send(sendData.encode('utf-8'))
                         except Exception as e:
                             print(e)
+                            connectionList.remove(clientSocket)
                             clientSocket.close()
-                            connection_list.remove(clientSocket)
+                            print('[INFO][{0}] 사용자와의 연결이 끊어졌습니다.'.format(ctime()))
                 time.sleep(slppeSecond)
-            print('사용자에게 전달 종료')
         except KeyboardInterrupt:
             # 부드럽게 종료하기
             serverSocket.close()
@@ -158,10 +171,12 @@ def main():
     bufsize = 1024
     addr = (host, port)
 
-    # 초당 건수
-    nps = 5
-    # 초당 상담원수
-    aps = 10
+    # 건당 대기 초
+    wc = 5
+    # 상담원수
+    ac = 10
+    # random 여부
+    rf = False
 
     # test data 정보
     # testFileDir = '/Users/whitexozu/dev/data/KB/stt/seoul/text/20180219/10'   #6812
@@ -176,7 +191,7 @@ def main():
 
     start_time = time.time()
     print('+++ call data 생성 시작')
-    callDataDict = setCallData(callNumbers, testFileDir)
+    callDataDict = setCallData(callNumbers=callNumbers, testFileDir=testFileDir, rf=rf)
     for k, v in callDataDict.items():
         if v :
             agents.append(agent(k, v))
@@ -188,6 +203,6 @@ def main():
 
     print('+++ STT 서버를 시작')
     print('+++ STT 서버를 끝내려면 Ctrl-C를 누르세요.')
-    runServer(addr=addr, bufsize=bufsize, nps=nps, aps=aps, agents=agents)
+    runServer(addr=addr, bufsize=bufsize, wc=wc, ac=ac, agents=agents)
 
 main()
