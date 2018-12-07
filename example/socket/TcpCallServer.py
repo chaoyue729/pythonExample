@@ -73,8 +73,8 @@ def setCallData(callNumbers, testFileDir):
 
 def runServer(**options):
 
-    addr = options['addr']
-    bufsize = options['bufsize']
+    # addr = options['addr']
+    # bufsize = options['bufsize']
     nps = options['nps']
     aps = options['aps']
 
@@ -82,13 +82,13 @@ def runServer(**options):
     serverSocket = socket(AF_INET, SOCK_STREAM)
 
     # 서버 정보를 바인딩
-    serverSocket.bind(addr)
+    serverSocket.bind(options['addr'])
 
     # 요청을 기다림(listen)
     serverSocket.listen(10)
     connection_list = [serverSocket]
     print('==============================================')
-    print('채팅 서버를 시작합니다. %s 포트로 접속을 기다립니다.' % str(addr[1]))
+    print('채팅 서버를 시작합니다. %s 포트로 접속을 기다립니다.' % str(options['addr'][1]))
     print('==============================================')
 
     # 무한 루프를 시작
@@ -111,11 +111,11 @@ def runServer(**options):
 
                 # 접속한 사용자(클라이언트)로부터 새로운 데이터 받음
                 else:
-
+                    data = sock.recv(options['bufsize'])
                     if data:
                         print('[INFO][%s] 클라이언트로부터 데이터를 전달 받았습니다.' % ctime())
                         try:
-                            data = sock.recv(bufsize).decode('utf-8')
+                            data = data.decode('utf-8')
                             # nps, aps 수정
                             # ex) {nps:5, aps:10}
                             # data 정보를 parsing 하여 형식이 일치하면 수정
@@ -132,7 +132,7 @@ def runServer(**options):
                         print('[INFO][%s] 사용자와의 연결이 끊어졌습니다.' % ctime())
 
             # 접속자에게 데이터 전달, 접속자가 없을경우 전달하지 않고 데이터 손실
-            slppeSecond = float("{0:.2f}".format(nps / aps - 0.005))
+            slppeSecond = float("{0:.2f}".format(nps / aps - 0.005))    # 내림
             print('slppeSecond : ' + str(slppeSecond))
             print('agents len : ' + str(len(options['agents'])))
             for agent in options['agents'][:( aps if len(options['agents']) > aps else len(options['agents']) )]:
@@ -142,8 +142,8 @@ def runServer(**options):
                             clientSocket.send((agent.getCallData()).encode('utf-8'))
                         except Exception as e:
                             print(e)
-                            socket_in_list.close()
-                            connection_list.remove(socket_in_list)
+                            clientSocket.close()
+                            connection_list.remove(clientSocket)
                 time.sleep(slppeSecond)
             print('사용자에게 전달 종료')
         except KeyboardInterrupt:
@@ -161,7 +161,7 @@ def main():
     # 초당 건수
     nps = 5
     # 초당 상담원수
-    aps = 3
+    aps = 10
 
     # test data 정보
     # testFileDir = '/Users/whitexozu/dev/data/KB/stt/seoul/text/20180219/10'   #6812

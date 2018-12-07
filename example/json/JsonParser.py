@@ -1,17 +1,33 @@
-import json
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-f = open("/Users/whitexozu/dev/data/temp2/20180320_6534942175750352489.TXT", 'r', encoding='euc-kr')
+import os
+import json
+from sys import exit
+
+baseDir = os.path.dirname(os.path.abspath(__file__))
+
+f = open(baseDir + '/' + 'test.json', 'r', encoding='euc-kr')
 line = f.read()
 
-# print(line)
+print(type(line))
+print(line)
+
+exit()
 
 customer = {
     'type': 'data',
     'id': '0',
-    'body': line,
+    'body': 'abcde',
     'date': '2018-05-30T13:34:56.978807'
 }
 
-msg = json.dumps(customer)
+# dict to str
+s = json.dumps(customer)
 
-print(json.loads(msg))
+# str to dict
+j = json.loads(s)
+
+with open(baseDir + '/' + 'test.json', 'w') as fp:
+	# fp.write(j) #exception
+	fp.write(s)
