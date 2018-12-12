@@ -7,8 +7,10 @@ st = datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d%H%M%S%f')
 st = '20171117134617329718'
 
 URL = 'http://localhost:8080/TA_SKM/ta/openApi/insertMntrLog.do'
+URL = 'http://localhost:8000/adv/rcv/'
 data = {'jobId': st, 'key': 'IV', 'type': 'M', 'state': 'E', 'serviceKey': 'b7a9dce1-9a39-4382-8b94-910220b5'}
 res = requests.post(URL, data=data)
 print(res.status_code)
-print(res.text)
-
+# print(res.text)
+if res.status_code == 200:
+    print(res.text)

@@ -35,7 +35,7 @@ class agent():
         return self.callDataArray[idx]
 
 def getJsonStr(callNumber, speaker, sTime, eTime, sentence, status):
-    jsonStr = "{{'callNumber':'{0}', 'speaker':'{1}', 'sTime':'{2}', 'eTime':'{3}', 'sentence':'{4}', 'status':'{5}'}}".format(callNumber, speaker, sTime, eTime, sentence, status)
+    jsonStr = '{{"callNumber":"{0}", "speaker":"{1}", "sTime":"{2}", "eTime":"{3}", "sentence":"{4}", "status":"{5}"}}'.format(callNumber, speaker, sTime, eTime, sentence, status)
     return jsonStr
 
 def setCallData(**options):
