@@ -25,7 +25,8 @@ SECRET_KEY = 'qr&bk#usxm(mucsic_i+u_in4#=-nr93z@tt^r19l0zx^p2xb*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['118.218.215.211', '127.0.0.1', '192.168.0.6']
 
 
 # Application definition
