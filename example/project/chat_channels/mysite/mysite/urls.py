@@ -19,6 +19,6 @@ from django.conf.urls import url, include
 
 
 urlpatterns = [
-	url('^chat/', include('chat.urls')),
+	url('chat/', include('chat.urls')),
     url('admin/', admin.site.urls),
 ]
