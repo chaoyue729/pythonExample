@@ -32,6 +32,7 @@ from keras.layers.core import Dense
 from sklearn.preprocessing import LabelEncoder
 from keras import backend as K
 
+from .utils import summarize
 
 # def index(request):
 #     latest_question_list = Question.objects.order_by('-pub_date')[:5]
