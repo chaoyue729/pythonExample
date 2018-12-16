@@ -1,0 +1,59 @@
+2018-12-16 20:07:44,520 - root - INFO - test!!!
+2018-12-16 20:13:29,944 - root - INFO - test!!!
+2018-12-16 20:16:02,316 - root - INFO - test!!!
+2018-12-16 20:20:04,088 - root - INFO - test!!!
+2018-12-16 20:22:02,595 - root - INFO - test!!!
+2018-12-16 20:22:02,595 - root - INFO - [SAS] test!!!
+2018-12-16 20:24:41,895 - root - INFO - test!!!
+2018-12-16 20:25:23,845 - root - INFO - test!!!
+2018-12-16 20:25:36,365 - root - INFO - test!!!
+2018-12-16 20:25:36,365 - my_module - INFO - test!!!
+2018-12-16 20:25:36,365 - my_module - INFO - test!!!
+2018-12-16 20:25:36,365 - my_module - INFO - [SAS] test!!!
+2018-12-16 20:25:36,365 - my_module - INFO - [SAS] test!!!
+2018-12-16 20:25:44,515 - root - INFO - test!!!
+2018-12-16 20:25:44,516 - my_module - INFO - test!!!
+2018-12-16 20:25:44,516 - my_module - INFO - test!!!
+2018-12-16 20:25:44,516 - my_module - INFO - [SAS] test!!!
+2018-12-16 20:25:44,516 - my_module - INFO - [SAS] test!!!
+2018-12-16 20:25:48,733 - root - INFO - test!!!
+2018-12-16 20:25:48,733 - my_module - INFO - test!!!
+2018-12-16 20:25:48,733 - my_module - INFO - test!!!
+2018-12-16 20:25:48,733 - my_module - INFO - [SAS] test!!!
+2018-12-16 20:25:48,733 - my_module - INFO - [SAS] test!!!
+2018-12-16 20:26:19,613 - root - INFO - test!!!
+2018-12-16 20:26:19,614 - my_module - INFO - test!!!
+2018-12-16 20:26:19,614 - my_module - INFO - test!!!
+2018-12-16 20:26:19,614 - root - INFO - [SAS] test!!!
+[2018-12-16 20:29:27,335][INFO][root][test!!!]
+[2018-12-16 20:29:27,335][INFO][my_module][test!!!]
+[2018-12-16 20:29:27,335][INFO][my_module][test!!!]
+[2018-12-16 20:29:27,335][INFO][root][[SAS] test!!!]
+[2018-12-16 20:29:57,729][INFO][root]test!!!
+[2018-12-16 20:29:57,729][INFO][my_module]test!!!
+[2018-12-16 20:29:57,729][INFO][my_module]test!!!
+[2018-12-16 20:29:57,729][INFO][root][SAS] test!!!
+[2018-12-16 20:30:26,612][INFO][root]test!!!
+[2018-12-16 20:30:26,612][INFO][my_module]test!!!
+[2018-12-16 20:30:26,612][INFO][my_module]test!!!
+[2018-12-16 20:30:26,612][INFO][root][SAS] test!!!
+[2018-12-16 20:32:05,200][INFO][root]test!!!
+[2018-12-16 20:32:05,200][INFO][my_module]my test!!!
+[2018-12-16 20:32:05,200][INFO][my_module]my test!!!
+[2018-12-16 20:32:05,201][INFO][root][SAS] test!!!
+[2018-12-16 20:32:22,766][INFO][my_module]my test!!!
+[2018-12-16 20:32:22,766][INFO][my_module]my test!!!
+[2018-12-16 20:33:29,381][INFO][my_module]my test!!!
+[2018-12-16 20:33:29,381][INFO][my_module]my test!!!
+[2018-12-16 20:33:38,059][INFO][my_module]my test!!!
+[2018-12-16 20:33:38,059][INFO][my_module]my test!!!
+[2018-12-16 20:34:14,394][INFO][my_module]my test!!!
+[2018-12-16 20:34:14,394][INFO][my_module]my test!!!
+[2018-12-16 20:35:03,007][INFO][my_module]my test!!!
+[2018-12-16 20:35:03,007][INFO][my_module]my test!!!
+[2018-12-16 20:35:06,597][INFO][my_module]my test!!!
+[2018-12-16 20:35:06,597][INFO][my_module]my test!!!
+[2018-12-16 20:37:07,670][INFO][my_module]my test!!!
+[2018-12-16 20:37:07,670][INFO][my_module]my test!!!
+[2018-12-16 20:37:17,489][INFO][my_module]my test!!!
+[2018-12-16 20:37:17,489][INFO][my_module]my test!!!
