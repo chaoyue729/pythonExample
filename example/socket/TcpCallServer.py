@@ -146,7 +146,7 @@ def runServer(**options):
             ac = ac if len(options['agents']) > ac else len(options['agents'])
             slppeSecond = float("{0:.2f}".format(wc / ac - 0.005))    # 내림
             print('[INFO][{0}] slppeSecond : {1}'.format(ctime(), slppeSecond))
-            print('[INFO][{0}] agents len : {1}'.format(ctime(), len(options['agents'])))
+            # print('[INFO][{0}] agents len : {1}'.format(ctime(), len(options['agents'])))
             for agent in options['agents'][:ac]:
                 sendData = agent.getCallData()
                 for clientSocket in connectionList:
@@ -172,9 +172,9 @@ def main():
     addr = (host, port)
 
     # 건당 대기 초
-    wc = 5
+    wc = 10
     # 상담원수
-    ac = 10
+    ac = 1
     # random 여부
     rf = False
 

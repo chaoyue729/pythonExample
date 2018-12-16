@@ -17,7 +17,7 @@ addr = (tcpServerHost, tcpServerPort)
 clientSocket = socket(AF_INET, SOCK_STREAM)
 
 # web server 정보
-webServerHost = 'localhost'
+webServerHost = '118.218.215.211'
 webServerPort = '8000'
 webServerPath = '/adv/rcv/'
 
@@ -53,10 +53,17 @@ while True:
                     webUrl = 'http://{0}:{1}{2}'.format(webServerHost, webServerPort, webServerPath)
                     data = json.loads(data.decode('utf-8'))
                     # print(type(json.loads(data.decode('utf-8'))))
-                    res = requests.post(webUrl, data)
-                    print(res.status_code)
-                    if res.status_code == 200:
-                        print(res.text)
+                    try:
+                        res = requests.post(webUrl, data)
+                        print(res.status_code)
+                        if res.status_code == 200:
+                            print(res.text)
+                    except requests.exceptions.ConnectionError as err:
+                        print('WebSocket connection error: {0}'.format(err))
+                        pass
+                    except:
+                        print("Unexpected error:", sys.exc_info()[0])
+                        pass
     except KeyboardInterrupt:
         clientSocket.close()
         sys.exit()

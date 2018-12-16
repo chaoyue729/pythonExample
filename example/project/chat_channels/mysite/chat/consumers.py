@@ -7,6 +7,12 @@ class ChatConsumer(WebsocketConsumer):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
 
+        print('>>> connect')
+        print(self.channel_name)
+        print(self.room_name)
+        print(self.room_group_name)
+        print(self)
+
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
@@ -16,6 +22,12 @@ class ChatConsumer(WebsocketConsumer):
 
     def disconnect(self, close_code):
         # Leave room group
+        print('>>> disconnect')
+        print(self.channel_name)
+        print(self.room_name)
+        print(self.room_group_name)
+        print(self)
+
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name
@@ -23,6 +35,10 @@ class ChatConsumer(WebsocketConsumer):
 
     # Receive message from WebSocket
     def receive(self, text_data):
+        print('>>> receive')
+        print(self.room_group_name)
+        print(json.loads(text_data))
+
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
 
@@ -37,6 +53,10 @@ class ChatConsumer(WebsocketConsumer):
 
     # Receive message from room group
     def chat_message(self, event):
+        print('>>> chat_message')
+        print(self.room_group_name)
+        print(event['message'])
+
         message = event['message']
 
         # Send message to WebSocket
