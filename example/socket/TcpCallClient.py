@@ -17,7 +17,8 @@ addr = (tcpServerHost, tcpServerPort)
 clientSocket = socket(AF_INET, SOCK_STREAM)
 
 # web server 정보
-webServerHost = '118.218.215.211'
+# webServerHost = '118.218.215.211'
+webServerHost = '192.168.0.2'
 webServerPort = '8000'
 webServerPath = '/adv/rcv/'
 
