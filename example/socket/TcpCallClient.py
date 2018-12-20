@@ -8,8 +8,8 @@ import time
 import datetime
 
 # tcp server 정보
-# tcpServerHost = '118.218.215.211'
-tcpServerHost = 'localhost'
+tcpServerHost = '118.218.215.211'
+# tcpServerHost = 'localhost'
 tcpServerPort = 27029
 tcpServerBufsize = 1024
 # tcpServerBufsize = 1048576
