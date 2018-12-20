@@ -34,12 +34,13 @@ class agent():
         self.callDataIndex += 1
         return self.callDataArray[idx]
 
-def getJsonStr(callNumber, speaker, sTime, eTime, sentence, status):
-    jsonStr = '{{"callNumber":"{0}", "speaker":"{1}", "sTime":"{2}", "eTime":"{3}", "sentence":"{4}", "status":"{5}"}}'.format(callNumber, speaker, sTime, eTime, sentence, status)
+def getJsonStr(callNumber, extensionNumber, speaker, sTime, eTime, sentence, status):
+    jsonStr = '{{"callNumber":"{0}", "extensionNumber":"{1}", "speaker":"{2}", "sTime":"{3}", "eTime":"{4}", "sentence":"{5}", "status":"{6}"}}'.format(callNumber, extensionNumber, speaker, sTime, eTime, sentence, status)
     return jsonStr
 
 def setCallData(**options):
     callNumbers = options['callNumbers']
+    extensionNumbers = options['extensionNumbers']
     testFileDir = options['testFileDir']
 
     callDataDict = {}
@@ -59,18 +60,20 @@ def setCallData(**options):
                     f = open(fullFileName, 'r', encoding='utf-8')
                     if options['rf']:
                         cn = random.choice(callNumbers)
+                        en = random.choice(extensionNumbers)
                     else:
                         cn = callNumbers[fileIdx % 10]
+                        en = extensionNumbers[fileIdx % 10]
 
-                    callDataDict[cn].append(getJsonStr(cn, '', '', '', '', 'start'))
+                    callDataDict[cn].append(getJsonStr(cn, '', '', '', '', '', 'start'))
 
                     while True:
                         line = f.readline()
                         if not line: break
                         arr = line.replace('\n','').split('|')
-                        callDataDict[cn].append(getJsonStr(cn, arr[0], arr[1], arr[2], arr[3], 'pending'))
+                        callDataDict[cn].append(getJsonStr(cn, en, arr[0], arr[1], arr[2], arr[3], 'pending'))
 
-                    callDataDict[cn].append(getJsonStr(cn, '', '', '', '', 'finish'))
+                    callDataDict[cn].append(getJsonStr(cn, '', '', '', '', '', 'finish'))
                     f.close()
 
     except PermissionError:
@@ -182,16 +185,19 @@ def main():
     # testFileDir = '/Users/whitexozu/dev/data/KB/stt/seoul/text/20180219/10'   #6812
     testFileDir = '/Users/whitexozu/dev/data/KB/stt/seoul/text/20180219/1'  #7
     callNumberFormat='1544-{0}'
+    extensionNumberFormat='010-1234-{0}'
     numberOfAgents = 10
     callNumbers = []
+    extensionNumbers = []
     agents = []
 
     for i in range(1, numberOfAgents+1):
         callNumbers.append(callNumberFormat.format("%04d" % i))
+        extensionNumbers.append(extensionNumberFormat.format("%04d" % i))
 
     start_time = time.time()
     print('+++ call data 생성 시작')
-    callDataDict = setCallData(callNumbers=callNumbers, testFileDir=testFileDir, rf=rf)
+    callDataDict = setCallData(callNumbers=callNumbers, extensionNumbers=extensionNumbers, testFileDir=testFileDir, rf=rf)
     for k, v in callDataDict.items():
         if v :
             agents.append(agent(k, v))

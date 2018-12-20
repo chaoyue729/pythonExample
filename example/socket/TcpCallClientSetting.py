@@ -4,7 +4,8 @@ from socket import *
 from select import select
 import ast
 
-host = 'localhost'
+host = '118.218.215.211'
+# host = 'localhost'
 port = 27029
 bufsize = 1024
 # BUFSIZE = 1048576

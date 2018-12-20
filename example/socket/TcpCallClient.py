@@ -8,6 +8,7 @@ import time
 import datetime
 
 # tcp server 정보
+# tcpServerHost = '118.218.215.211'
 tcpServerHost = 'localhost'
 tcpServerPort = 27029
 tcpServerBufsize = 1024
@@ -17,7 +18,6 @@ addr = (tcpServerHost, tcpServerPort)
 clientSocket = socket(AF_INET, SOCK_STREAM)
 
 # web server 정보
-# webServerHost = '118.218.215.211'
 webServerHost = '192.168.0.2'
 webServerPort = '8000'
 webServerPath = '/adv/rcv/'
