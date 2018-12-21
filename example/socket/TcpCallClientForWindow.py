@@ -28,7 +28,9 @@ clientSocket.connect((tcpServerHost, tcpServerPort))
 print('ok')
 while 1:
 	try:
-		data = json.loads(clientSocket.recv(1024).decode('utf-8'))
+		data = {}
+		if clientSocket.recv(1024).decode('utf-8') != '':
+			data = json.loads(clientSocket.recv(1024).decode('utf-8'))
 		print('recive_data : ' + str(data))
 		try:
 			webUrl = 'http://{0}:{1}{2}'.format(webServerHost, webServerPort, webServerPath)
