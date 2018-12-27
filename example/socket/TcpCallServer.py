@@ -34,14 +34,15 @@ class agent():
         self.callDataIndex += 1
         return self.callDataArray[idx]
 
-def getJsonStr(callNumber, extensionNumber, speaker, sTime, eTime, sentence, status):
-    jsonStr = '{{"callNumber":"{0}", "extensionNumber":"{1}", "speaker":"{2}", "sTime":"{3}", "eTime":"{4}", "sentence":"{5}", "status":"{6}"}}'.format(callNumber, extensionNumber, speaker, sTime, eTime, sentence, status)
+def getJsonStr(callNumber, extensionNumber, speaker, sTime, eTime, sentence, status, uid):
+    jsonStr = '{{"callNumber":"{0}", "extensionNumber":"{1}", "speaker":"{2}", "sTime":"{3}", "eTime":"{4}", "sentence":"{5}", "status":"{6}", "uid":"{7}"}}'.format(callNumber, extensionNumber, speaker, sTime, eTime, sentence, status, uid)
     return jsonStr
 
 def setCallData(**options):
     callNumbers = options['callNumbers']
     extensionNumbers = options['extensionNumbers']
     testFileDir = options['testFileDir']
+    startTime = options['startTime']
 
     callDataDict = {}
     for callNumber in callNumbers:
@@ -65,15 +66,16 @@ def setCallData(**options):
                         cn = callNumbers[fileIdx % 10]
                         en = extensionNumbers[fileIdx % 10]
 
-                    callDataDict[cn].append(getJsonStr(cn, '', '', '', '', '', 'start'))
+                    uid = str(startTime) + '_' + cn
+                    callDataDict[cn].append(getJsonStr(cn, en, '', '', '', '', 'start', uid))
 
                     while True:
                         line = f.readline()
                         if not line: break
                         arr = line.replace('\n','').split('|')
-                        callDataDict[cn].append(getJsonStr(cn, en, arr[0], arr[1], arr[2], arr[3], 'pending'))
+                        callDataDict[cn].append(getJsonStr(cn, en, arr[0], arr[1], arr[2], arr[3], 'pending', uid))
 
-                    callDataDict[cn].append(getJsonStr(cn, '', '', '', '', '', 'finish'))
+                    callDataDict[cn].append(getJsonStr(cn, en, '', '', '', '', 'finish', uid))
                     f.close()
 
     except PermissionError:
@@ -171,7 +173,7 @@ def main():
     # 호스트, 포트와 버퍼 사이즈를 지정
     host = ''
     port = 27029
-    bufsize = 1024
+    bufsize = 1024 * 5
     addr = (host, port)
 
     # 건당 대기 초
@@ -195,15 +197,15 @@ def main():
         callNumbers.append(callNumberFormat.format("%04d" % i))
         extensionNumbers.append(extensionNumberFormat.format("%04d" % i))
 
-    start_time = time.time()
+    startTime = time.time()
     print('+++ call data 생성 시작')
-    callDataDict = setCallData(callNumbers=callNumbers, extensionNumbers=extensionNumbers, testFileDir=testFileDir, rf=rf)
+    callDataDict = setCallData(callNumbers=callNumbers, extensionNumbers=extensionNumbers, testFileDir=testFileDir, rf=rf, startTime=startTime)
     for k, v in callDataDict.items():
         if v :
             agents.append(agent(k, v))
 
     print('+++ call data 생성 종료')
-    print('+++ call data 생성 시간 : {0}'.format(timeFormat(int(time.time() - start_time))))
+    print('+++ call data 생성 시간 : {0}'.format(timeFormat(int(time.time() - startTime))))
 
     print('+++ agents count : ' + str(len(agents)))
 

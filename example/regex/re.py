@@ -1,4 +1,5 @@
 import re
+from sys import exit
 
 '''
 참고사이트
@@ -16,16 +17,18 @@ http://blog.naver.com/PostView.nhn?blogId=rookiemodel&logNo=10139446205
 # \W - 문자+숫자(alphanumeric)가 아닌 문자와 매치, [^a-zA-Z0-9]와 동일한 표현식이다.
 # 대문자로 사용된 것은 소문자의 반대임을 추측할 수 있을 것이다.
 
-
 # 반복
 # *, +, ? 메타문자는 모두 {m, n} 형태로 고쳐쓰는 것이 가능
-
+# * 0번이상 {0,}
+# + 1번이상 {1,}
+# ? 0, 1번 {0,1}
 
 # 정규식을 이용한 문자열 검색
 # match()	문자열의 처음부터 정규식과 매치되는지 조사한다.
 # search()	문자열 전체를 검색하여 정규식과 매치되는지 조사한다.
 # findall()	정규식과 매치되는 모든 문자열(substring)을 리스트로 리턴한다
 # finditer()	정규식과 매치되는 모든 문자열(substring)을 iterator 객체로 리턴한다
+
 p = re.compile('[a-z]+')
 m = p.match('string goes here')
 print(m.group())
@@ -110,3 +113,11 @@ if m:
 	# print(m.group(1))
 else:
 	print(m)
+
+print('---------------------------------------------------------------')
+#Lazy 방식을 이용한 반복문 찾기
+p = re.compile('\{.*?\}')
+temp = '{"callNumber":"1544-0002", "extensionNumber":"010-1234-0002", "speaker":"C", "sTime":"75", "eTime":"75", "sentence":"아", "status":"pending", "uid":"1545915158.9274123_1544-0002"}{"callNumber":"1544-0003", "extensionNumber":"010-1234-0003", "speaker":"", "sTime":"", "eTime":"", "sentence":"", "status":"start", "uid":"1545915158.9274123_1544-0003"}{"callNumber":"1544-0003", "extensionNumber":"010-1234-0003", "speaker":"", "sTime":"", "eTime":"", "sentence":"", "status":"start", "uid":"1545915158.9274123_1544-0003"}'
+m = p.findall(temp)
+print(len(m))
+print(m)
