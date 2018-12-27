@@ -18,7 +18,8 @@ addr = (tcpServerHost, tcpServerPort)
 clientSocket = socket(AF_INET, SOCK_STREAM)
 
 # web server 정보
-webServerHost = '192.168.0.2'
+# webServerHost = '192.168.0.2'
+webServerHost = 'localhost'
 webServerPort = '8000'
 webServerPath = '/adv/rcv/'
 
@@ -52,7 +53,8 @@ while True:
                 else:
                     print('%s' % data.decode('utf-8'))  # 메세지 시간은 서버 시간을 따른다
                     webUrl = 'http://{0}:{1}{2}'.format(webServerHost, webServerPort, webServerPath)
-                    data = json.loads(data.decode('utf-8'))
+                    if data.decode('utf-8') != '':
+                        postData = json.loads(data.decode('utf-8'))
                     # print(type(json.loads(data.decode('utf-8'))))
                     try:
                         res = requests.post(webUrl, data)
