@@ -198,8 +198,9 @@ def main():
         extensionNumbers.append(extensionNumberFormat.format("%04d" % i))
 
     startTime = time.time()
+    startTimeApplyFormat = str(datetime.datetime.fromtimestamp(startTime).strftime('%Y%m%d%H%M%S%f'))
     print('+++ call data 생성 시작')
-    callDataDict = setCallData(callNumbers=callNumbers, extensionNumbers=extensionNumbers, testFileDir=testFileDir, rf=rf, startTime=startTime)
+    callDataDict = setCallData(callNumbers=callNumbers, extensionNumbers=extensionNumbers, testFileDir=testFileDir, rf=rf, startTime=startTimeApplyFormat)
     for k, v in callDataDict.items():
         if v :
             agents.append(agent(k, v))
