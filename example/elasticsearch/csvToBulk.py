@@ -9,7 +9,8 @@ es_client = elasticsearch.Elasticsearch("localhost:9200")
 # lg > script_correct_data
 
 # fileName = '/Users/whitexozu/dev/project/lgu+/data/lgscript.min.csv'
-fileName = '/Users/whitexozu/dev/project/lgu+/data/lgscript.csv'
+# fileName = '/Users/whitexozu/dev/project/lgu+/data/lgscript.csv'
+fileName = '/Users/whitexozu/dev/project/LGUplus/data/lgscript.csv'
 f = open(fileName, 'r', encoding='utf-8')
 # p = re.compile('\{.*?\}')
 p = re.compile('[^ ㄱ-ㅣ가-힣0-9]+')

@@ -72,6 +72,7 @@ while True:
                         # print(len(datas))
                         for d in datas:
                             jd = json.loads(d)
+                            print(jd)
                             res = requests.post(webUrl, jd)
 
                         # data = json.loads(data.decode('utf-8'))

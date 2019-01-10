@@ -177,15 +177,14 @@ def main():
     addr = (host, port)
 
     # 건당 대기 초
-    wc = 10
+    wc = 3
     # 상담원수
-    ac = 1
+    ac = 10
     # random 여부
     rf = False
 
     # test data 정보
-    # testFileDir = '/Users/whitexozu/dev/data/KB/stt/seoul/text/20180219/10'   #6812
-    testFileDir = '/Users/whitexozu/dev/data/KB/stt/seoul/text/20180219/1'  #7
+    testFileDir = 'C:\dev\python\data'
     callNumberFormat='1544-{0}'
     entryNumberFormat='010-1234-{0}'
     numberOfAgents = 10
