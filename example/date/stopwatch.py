@@ -19,6 +19,10 @@ class stopWatch:
         return it['tTime']
 
     def getTotalReport(self):
+        for t in self.timer:
+            t['sTime'] = t['sTime'].strftime('%Y-%m-%d %H:%M:%S')
+            t['eTime'] = t['eTime'].strftime('%Y-%m-%d %H:%M:%S')
+            t['tTime'] = t['tTime'].total_seconds()
         return self.timer
 
     def prettyPrint(self):
