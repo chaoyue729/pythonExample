@@ -11,7 +11,7 @@ class stopWatch:
 
     def stop(self, name=''):
         it = [t for t in self.timer if t['name'] == name][0]
-        it['eTime'] = datetime.datetime.now()
+        it['eTime'] = datetime.datetime.no w()
         it['tTime'] = it['eTime'] - it['sTime']
     
     def getTotalTime(self, name=''):
@@ -38,7 +38,9 @@ if __name__ == '__main__':
     sw.start()
     time.sleep(1)
     sw.stop()
-    # print(sw.getTotalTime())
+    print(sw.getTotalTime())
+
+    exit()
 
     sw.start('A')
     time.sleep(1)
