@@ -1,5 +1,7 @@
 import time
 import datetime
+import json
+from bson import json_util
 from sys import exit
 
 class stopWatch:
@@ -11,7 +13,7 @@ class stopWatch:
 
     def stop(self, name=''):
         it = [t for t in self.timer if t['name'] == name][0]
-        it['eTime'] = datetime.datetime.no w()
+        it['eTime'] = datetime.datetime.now()
         it['tTime'] = it['eTime'] - it['sTime']
     
     def getTotalTime(self, name=''):
@@ -35,28 +37,48 @@ class stopWatch:
 if __name__ == '__main__':
     sw = stopWatch()
 
+    # 측정결과 평군값 구하기
+    div = []    # 측정 데이터 저장 list
+    temp = datetime.timedelta(0)    # 측정 합을 위한 변수
+    print(temp)
+    # 전체 측정
     sw.start()
-    time.sleep(1)
-    sw.stop()
-    print(sw.getTotalTime())
-
-    exit()
-
-    sw.start('A')
-    time.sleep(1)
-    sw.stop('A')
-    # print(sw.getTotalTime('A'))
-
+    # B 측정
     sw.start('B')
     time.sleep(1)
     sw.stop('B')
-    
+    print(sw.getTotalTime('B'))
+    div.append(sw.getTotalTime('B'))
+    # A 측정
+    sw.start('A')
+    time.sleep(1)
+    sw.stop('A')
+    print(sw.getTotalTime('A'))
+    div.append(sw.getTotalTime('A'))
+    sw.stop()
+    print(sw.getTotalTime())
+    div.append(sw.getTotalTime())
+    # 평군 구하기
+    for t in div:
+        print(t)
+        temp += t
+    dTime = temp / len(div)
+    print(dTime.total_seconds())
+    print(str(dTime))
+    # exit()
+
+    # # 측정결과 출력
+    # sw.start('B')
+    # time.sleep(1)
+    # sw.stop('B')
     # sw.prettyPrint()
 
+    # # 측정결과 전체 구하기
     # print(sw.getTotalReport)
-    for t in sw.getTotalReport():
-        print(t)
+    # for t in sw.getTotalReport():
+    #     print(t)
 
+    # # 측정 데이터 직접 입력 (기다리는 시간을 줄이기 위해)
     # t1 = datetime.datetime.now()
     # t2 = datetime.datetime.now().replace(minute=20)
     # print(t1)
@@ -67,12 +89,14 @@ if __name__ == '__main__':
     # print(t3.total_seconds())
     # exit()
 
+    # # 다른 방법의 시간 측정
     # st = time.time()
     # time.sleep(1) 
     # et = time.time()
     # print(st, et, et - st)
     # print(datetime.datetime.now())
 
+    # # datetime.datetime formrat 변경
     # t1 = datetime.datetime.now()
     # time.sleep(1)
     # t2 = datetime.datetime.now()

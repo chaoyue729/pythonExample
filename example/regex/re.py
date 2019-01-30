@@ -121,3 +121,8 @@ temp = '{"callNumber":"1544-0002", "extensionNumber":"010-1234-0002", "speaker":
 m = p.findall(temp)
 print(len(m))
 print(m)
+
+print('---------------------------------------------------------------')
+html = '<a>aaa</a><b>bbbb</b>'
+greedy = re.compile('<.*?>', re.I|re.S) 
+print(greedy.findall(html)) 
