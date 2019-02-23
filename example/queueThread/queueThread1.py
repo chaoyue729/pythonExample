@@ -43,15 +43,15 @@ def main():
 	cat2 = Catcher("B", StringQueue)
 	cat2.setDaemon(True)
 
-	# cat1.start()					# thread start
-	# cat2.start()
+	cat1.start()					# thread start
+	cat2.start()
 	
-	# StringQueue.put(3)	
-	# StringQueue.put(4)
+	StringQueue.put(3)	
+	StringQueue.put(4)
 	
-	# cat1.dataQueue.join()				# wait for data queue empty
-	# cat2.dataQueue.join()
+	cat1.dataQueue.join()				# wait for data queue empty
+	cat2.dataQueue.join()
 	
-
+	print('main finish')
 if __name__ == "__main__":
 	main()

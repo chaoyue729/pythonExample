@@ -50,6 +50,7 @@ queueLock.release()
 
 # Wait for queue to empty
 while not workQueue.empty():
+   print('wait......')
    pass
 
 # Notify threads it's time to exit

@@ -158,6 +158,7 @@ def runServer(**options):
                     if clientSocket != serverSocket:
                         try:
                             clientSocket.send(sendData.encode('utf-8'))
+                            print('[INFO][{0}] send.'.format(ctime()))
                         except Exception as e:
                             print(e)
                             connectionList.remove(clientSocket)

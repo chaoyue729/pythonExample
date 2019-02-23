@@ -4,13 +4,13 @@ from time import sleep, ctime
 loops = [8,2]
 
 def loop(nloop,nsec):
-    print 'start loop', nloop, 'at:',ctime()
+    print('start loop', nloop, 'at:',ctime())
     sleep(nsec)
-    print 'loop', nloop, 'at:', ctime()
+    print('loop', nloop, 'at:', ctime())
 
 
 def test() :
-    print 'starting at:', ctime()
+    print('starting at:', ctime())
     threads = []
     nloops = range(len(loops))
 
@@ -24,7 +24,7 @@ def test() :
     for i in nloops:
         threads[i].join()
 
-    print 'all Done at: ', ctime()
+    print('all Done at: ', ctime())
 
 if  __name__ == '__main__' :
    test()
