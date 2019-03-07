@@ -11,8 +11,8 @@ corpus = [
 ]
 vectorizer = HashingVectorizer(n_features=2**4)
 X = vectorizer.fit_transform(corpus)
-# print(X.shape)
-# print(X.toarray())
+print(X.shape)
+print(X.toarray())
 print(vectorizer.build_analyzer())
 
 
